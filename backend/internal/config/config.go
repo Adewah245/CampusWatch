@@ -1,0 +1,25 @@
+package config
+
+import (
+	"errors"
+	"os"
+)
+
+type Config struct {
+	Port        string
+	DatabaseURL string
+}
+
+func Load() (Config, error) {
+	cfg := Config{
+		Port:        os.Getenv("PORT"),
+		DatabaseURL: os.Getenv("DATABASE_URL"),
+	}
+	if cfg.Port == "" {
+		return Config{}, errors.New("PORT IS REQUIRED")
+	}
+	if cfg.DatabaseURL == "" {
+		return Config{}, errors.New("DATABASE_URL IS REQUIRED")
+	}
+	return cfg, nil
+}
