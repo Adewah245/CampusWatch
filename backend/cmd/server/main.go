@@ -29,7 +29,7 @@ func main() {
 
 	log.Println("database connection established")
 
-	srv := server.NewHttpServer(cfg.Port)
+	srv := server.NewHttpServer(cfg.Port, db)
 	go func() {
 		log.Printf("starting http server on %s", srv.Addr)
 		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {

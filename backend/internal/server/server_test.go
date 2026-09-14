@@ -1,13 +1,14 @@
 package server
 
 import (
+	"database/sql"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 )
 
 func TestNewRouterHealthEndpoint(t *testing.T) {
-	mux := NewRouter()
+	mux := NewRouter(nil)
 	req := httptest.NewRequest(http.MethodGet, "/health", nil)
 	res := httptest.NewRecorder()
 
@@ -23,7 +24,7 @@ func TestNewRouterHealthEndpoint(t *testing.T) {
 }
 
 func TestNewHttpServer(t *testing.T) {
-	srv := NewHttpServer("0")
+	srv := NewHttpServer("0", &sql.DB{})
 	if srv == nil {
 		t.Fatal("expected HTTP server instance")
 	}
