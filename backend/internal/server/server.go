@@ -20,6 +20,11 @@ func NewRouter(db *sql.DB) *http.ServeMux {
 		institutionService := service.NewInstitutionService(institutionRepo)
 		mux.HandleFunc("/api/v1/institutions", handler.InstitutionsHandler(institutionService))
 		mux.HandleFunc("/api/v1/institutions/", handler.InstitutionByIDHandler(institutionService))
+
+		campusRepo := repository.NewCampusRepository(db)
+		campusService := service.NewCampusService(campusRepo)
+		mux.HandleFunc("/api/v1/campuses", handler.CampusesHandler(campusService))
+		mux.HandleFunc("/api/v1/campuses/", handler.CampusByIDHandler(campusService))
 	}
 
 	return mux
