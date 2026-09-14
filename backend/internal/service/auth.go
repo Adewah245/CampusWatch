@@ -23,6 +23,20 @@ type UserRepository interface {
 type SessionRepository interface {
 	Save(ctx context.Context, session model.Session) error
 	FindByToken(ctx context.Context, token string) (*model.Session, error)
+	Delete(ctx context.Context, token string) error
+}
+
+// Logout invalidates an authentication session by its token.
+func (s *AuthService) Logout(ctx context.Context, token string) error {
+	if token == "" {
+		return errors.New("session token is required")
+	}
+
+	if err := s.sessionRepo.Delete(ctx, token); err != nil {
+		return fmt.Errorf("delete session: %w", err)
+	}
+
+	return nil
 }
 
 // AuthService manages authentication and session creation for users.

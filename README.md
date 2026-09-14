@@ -1,3 +1,8 @@
+```md
+<p align="center">
+  <img src="Adewahlog.png" width="180" alt="Adewah Logo">
+</p>
+```
 # CampusWatch
 
 > **Monitor. Understand. Protect Every System.**
