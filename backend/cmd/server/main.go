@@ -28,6 +28,14 @@ func main() {
 	defer db.Close()
 
 	log.Println("database connection established")
+	migrationDir := os.Getenv("MIGRATIONS_DIR")
+	if migrationDir == "" {
+		migrationDir = "backend/migrations"
+	}
+	if err := database.ApplyMigrations(ctx, db, migrationDir); err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("database migrations applied from %s", migrationDir)
 
 	srv := server.NewHttpServer(cfg.Port, db)
 	go func() {
