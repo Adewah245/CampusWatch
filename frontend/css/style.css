@@ -1,0 +1,249 @@
+/* Remove default browser spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Main page */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #172033;
+}
+
+
+/* Admin login layout */
+.admin-login-page {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* Left branding section */
+.admin-login-brand {
+    width: 50%;
+    background: #082b52;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+}
+
+
+/* Content inside branding section */
+.brand-content {
+    text-align: center;
+}
+
+
+/* CampusWatch logo */
+.brand-logo {
+    width: 90px;
+    height: 90px;
+
+    margin: 0 auto 25px;
+
+    border: 4px solid white;
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+/* Brand name */
+.brand-content h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+
+/* Blue part of CampusWatch */
+.brand-content h1 span {
+    color: #1d7ff2;
+}
+
+
+/* Brand description */
+.brand-content p {
+    font-size: 18px;
+    color: #d5e3f5;
+}
+
+
+/* Bottom text */
+.brand-bottom {
+    margin-top: 180px;
+    font-size: 14px;
+    color: #b9c9dc;
+}
+
+
+/* Right side */
+.admin-login-form-container {
+    width: 50%;
+    background: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+}
+
+
+/* Login box */
+.admin-login-form {
+    width: 100%;
+    max-width: 430px;
+}
+
+
+/* Login icon */
+.login-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    background: #e7f0ff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+}
+
+
+/* Login heading */
+.admin-login-form h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+
+/* Login description */
+.login-description {
+    text-align: center;
+    color: #718096;
+    font-size: 14px;
+
+    margin-bottom: 35px;
+}
+
+
+/* Form group */
+.form-group {
+    margin-bottom: 22px;
+}
+
+
+/* Labels */
+.form-group label {
+    display: block;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+
+/* Input fields */
+.form-group input {
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid #d7dee8;
+    border-radius: 8px;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+
+/* Input focus */
+.form-group input:focus {
+    border-color: #1d7ff2;
+    box-shadow: 0 0 0 3px rgba(29, 127, 242, 0.1);
+}
+
+
+/* Login button */
+.login-button {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #1d7ff2;
+    color: white;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+/* Login button hover */
+.login-button:hover {
+    background: #1267ca;
+}
+
+
+/* Authorized access message */
+.authorized-message {
+    text-align: center;
+
+    margin-top: 25px;
+
+    font-size: 13px;
+    color: #718096;
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+
+    .admin-login-page {
+        flex-direction: column;
+    }
+
+    .admin-login-brand {
+        width: 100%;
+        min-height: 40vh;
+    }
+
+    .admin-login-form-container {
+        width: 100%;
+        min-height: 60vh;
+    }
+
+    .brand-bottom {
+        margin-top: 40px;
+    }
+
+    .brand-content h1 {
+        font-size: 32px;
+    }
+}

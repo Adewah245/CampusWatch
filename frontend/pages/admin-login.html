@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Admin Login</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+    <div class="admin-login-page">
+
+        <!-- Left side -->
+        <div class="admin-login-brand">
+
+            <div class="brand-content">
+
+                <div class="brand-logo">
+                    CW
+                </div>
+
+                <h1>Campus<span>Watch</span></h1>
+
+                <p>Safer Campus. Smarter Monitoring.</p>
+
+                <div class="brand-bottom">
+                    Secure • Monitor • Protect
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Right side -->
+        <div class="admin-login-form-container">
+
+            <div class="admin-login-form">
+
+                <div class="login-icon">
+                    👤
+                </div>
+
+                <h2>Admin Login</h2>
+
+                <p class="login-description">
+                    Only authorized administrators can access this system.
+                </p>
+
+
+                <form id="adminLoginForm">
+
+                    <div class="form-group">
+
+                        <label for="adminEmail">
+                            Admin Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="adminEmail"
+                            placeholder="Enter your admin email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="adminPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="adminPassword"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button type="submit" class="login-button">
+                        Login
+                    </button>
+
+                </form>
+
+
+                <div class="authorized-message">
+                    🔒 Authorized Access Only
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/app.js"></script>
+
+</body>
+
+</html>
