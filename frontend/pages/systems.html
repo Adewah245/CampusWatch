@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Systems</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- ================================
+             SIDEBAR
+             ================================ -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                Campus<span>Watch</span>
+            </div>
+
+            <p class="sidebar-description">
+                Campus Monitoring Platform
+            </p>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="institution.html">
+                    Institutions
+                </a>
+
+                <a href="campus.html">
+                    Campuses
+                </a>
+
+                <a href="cluster.html">
+                    Clusters
+                </a>
+
+                <a href="systems.html" class="active">
+                    Systems
+                </a>
+
+                <a href="sessions.html">
+                    User Sessions
+                </a>
+
+                <a href="health.html">
+                    System Health
+                </a>
+
+                <a href="issues.html">
+                    Issues
+                </a>
+
+                <a href="reports.html">
+                    Reports
+                </a>
+
+                <a href="notifications.html">
+                    Notifications
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="../index.html">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================================
+             MAIN CONTENT
+             ================================ -->
+
+        <main class="dashboard-main">
+
+
+            <!-- Top bar -->
+
+            <header class="dashboard-topbar">
+
+                <p class="breadcrumb">
+                    CampusWatch / Systems
+                </p>
+
+
+                <div class="user-profile">
+
+                    <div class="profile-circle">
+                        U
+                    </div>
+
+                    <div>
+
+                        <strong>Campus User</strong>
+
+                        <small>Student</small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================================
+                 SYSTEM CONTENT
+                 ================================ -->
+
+            <section class="dashboard-content">
+
+
+                <!-- Page heading -->
+
+                <div class="page-heading">
+
+                    <p class="hero-label">
+                        SYSTEM MANAGEMENT
+                    </p>
+
+                    <h1>
+                        Computer Systems
+                    </h1>
+
+                    <p>
+                        View and monitor computer systems across the campus.
+                    </p>
+
+                </div>
+
+
+                <!-- ================================
+                     SYSTEM SUMMARY
+                     ================================ -->
+
+                <div class="dashboard-stats">
+
+
+                    <div class="stat-card">
+
+                        <p>Total Systems</p>
+
+                        <strong>
+                            96
+                        </strong>
+
+                        <span>
+                            Cluster 1
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <p>Online</p>
+
+                        <strong class="stat-online">
+                            78
+                        </strong>
+
+                        <span>
+                            Currently connected
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <p>Idle</p>
+
+                        <strong class="stat-idle">
+                            12
+                        </strong>
+
+                        <span>
+                            No recent activity
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <p>Offline</p>
+
+                        <strong class="stat-offline">
+                            6
+                        </strong>
+
+                        <span>
+                            Not responding
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     FILTER AREA
+                     ================================ -->
+
+                <div class="system-filter">
+
+                    <div>
+
+                        <label for="clusterFilter">
+                            Cluster
+                        </label>
+
+                        <select id="clusterFilter">
+
+                            <option value="all">
+                                All Clusters
+                            </option>
+
+                            <option value="cluster1">
+                                Cluster 1
+                            </option>
+
+                            <option value="cluster2">
+                                Cluster 2
+                            </option>
+
+                            <option value="cluster3">
+                                Cluster 3
+                            </option>
+
+                            <option value="cluster4">
+                                Cluster 4
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="statusFilter">
+                            Status
+                        </label>
+
+                        <select id="statusFilter">
+
+                            <option value="all">
+                                All Statuses
+                            </option>
+
+                            <option value="online">
+                                Online
+                            </option>
+
+                            <option value="idle">
+                                Idle
+                            </option>
+
+                            <option value="offline">
+                                Offline
+                            </option>
+
+                            <option value="maintenance">
+                                Maintenance
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="system-search">
+
+                        <label for="systemSearch">
+                            Search
+                        </label>
+
+                        <input
+                            type="search"
+                            id="systemSearch"
+                            placeholder="Search system ID..."
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================
+                     SYSTEM TABLE
+                     ================================ -->
+
+                <div class="system-table-container">
+
+                    <table class="system-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    System ID
+                                </th>
+
+                                <th>
+                                    Hostname
+                                </th>
+
+                                <th>
+                                    Cluster
+                                </th>
+
+                                <th>
+                                    Table
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    User
+                                </th>
+
+                                <th>
+                                    Last Activity
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <!-- System 1 -->
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        SYS-000001
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-001
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    Table 1
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status online">
+                                        Online
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    Student
+                                </td>
+
+                                <td>
+                                    Just now
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- System 2 -->
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        SYS-000002
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-002
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    Table 1
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status online">
+                                        Online
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    Student
+                                </td>
+
+                                <td>
+                                    2 min ago
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- System 3 -->
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        SYS-000003
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-003
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    Table 1
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status idle">
+                                        Idle
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    Student
+                                </td>
+
+                                <td>
+                                    7 min ago
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- System 4 -->
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        SYS-000004
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-004
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    Table 1
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status offline">
+                                        Offline
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    —
+                                </td>
+
+                                <td>
+                                    12 min ago
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- System 5 -->
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        SYS-000005
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-005
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    Table 2
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status online">
+                                        Online
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    Student
+                                </td>
+
+                                <td>
+                                    1 min ago
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- System 6 -->
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        SYS-000006
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-006
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    Table 2
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status online">
+                                        Online
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    Student
+                                </td>
+
+                                <td>
+                                    3 min ago
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- System 7 -->
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        SYS-000007
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-007
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    Table 2
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status idle">
+                                        Idle
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    Student
+                                </td>
+
+                                <td>
+                                    8 min ago
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                            <!-- System 8 -->
+
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        SYS-000008
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-008
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    Table 2
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status offline">
+                                        Offline
+                                    </span>
+
+                                </td>
+
+                                <td>
+                                    —
+                                </td>
+
+                                <td>
+                                    15 min ago
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- Pagination -->
+
+                <div class="pagination">
+
+                    <button>
+                        Previous
+                    </button>
+
+                    <span>
+                        Page 1 of 12
+                    </span>
+
+                    <button>
+                        Next
+                    </button>
+
+                </div>
+
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+</body>
+
+</html>
