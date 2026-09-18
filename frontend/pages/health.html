@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - System Health</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            <h2>CampusWatch</h2>
+
+            <p>Campus Monitoring Platform</p>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="institution.html">
+                Institutions
+            </a>
+
+            <a href="campus.html">
+                Campuses
+            </a>
+
+            <a href="cluster.html">
+                Clusters
+            </a>
+
+            <a href="systems.html">
+                Systems
+            </a>
+
+            <a href="sessions.html">
+                User Sessions
+            </a>
+
+            <a href="health.html" class="active">
+                System Health
+            </a>
+
+            <a href="issues.html">
+                Issues
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="notifications.html">
+                Notifications
+            </a>
+
+            <a href="login.html">
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+
+        <!-- Top Bar -->
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                CampusWatch / System Health
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    U
+                </div>
+
+                <div>
+
+                    <strong>Campus User</strong>
+
+                    <small>Student</small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- Page Content -->
+        <section class="page-content">
+
+
+            <!-- Page Heading -->
+            <div class="page-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        SYSTEM MONITORING
+                    </span>
+
+                    <h1>System Health</h1>
+
+                    <p>
+                        Monitor the health and performance of campus systems.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Health Summary -->
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+
+                        <span>Healthy Systems</span>
+
+                        <strong>72</strong>
+
+                        <small>
+                            Operating normally
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+
+                        <span>Warning</span>
+
+                        <strong class="warning-number">
+                            12
+                        </strong>
+
+                        <small>
+                            Needs attention
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+
+                        <span>Critical</span>
+
+                        <strong class="critical-number">
+                            6
+                        </strong>
+
+                        <small>
+                            Immediate attention
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+
+                        <span>Offline</span>
+
+                        <strong class="offline-number">
+                            6
+                        </strong>
+
+                        <small>
+                            Not responding
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Health Overview -->
+            <div class="health-overview">
+
+                <div class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>Campus Health Overview</h2>
+
+                            <span>
+                                Current system resource usage
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="health-metrics">
+
+
+                        <!-- CPU -->
+                        <div class="health-metric">
+
+                            <div class="metric-header">
+
+                                <span>CPU Usage</span>
+
+                                <strong>32%</strong>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-value"
+                                    style="width: 32%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Memory -->
+                        <div class="health-metric">
+
+                            <div class="metric-header">
+
+                                <span>Memory Usage</span>
+
+                                <strong>48%</strong>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-value"
+                                    style="width: 48%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Disk -->
+                        <div class="health-metric">
+
+                            <div class="metric-header">
+
+                                <span>Disk Usage</span>
+
+                                <strong>61%</strong>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-value"
+                                    style="width: 61%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Network -->
+                        <div class="health-metric">
+
+                            <div class="metric-header">
+
+                                <span>Network Connectivity</span>
+
+                                <strong>98%</strong>
+
+                            </div>
+
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-value"
+                                    style="width: 98%;"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Systems Needing Attention -->
+            <div class="section-card">
+
+                <div class="table-header">
+
+                    <div>
+
+                        <h2>Systems Needing Attention</h2>
+
+                        <span>
+                            Systems with health warnings or problems
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-container-inner">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>System ID</th>
+
+                                <th>Hostname</th>
+
+                                <th>Cluster</th>
+
+                                <th>CPU</th>
+
+                                <th>Memory</th>
+
+                                <th>Disk</th>
+
+                                <th>Agent</th>
+
+                                <th>Status</th>
+
+                                <th>Action</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+
+                            <tr>
+
+                                <td>
+                                    SYS-000018
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-018
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    87%
+                                </td>
+
+                                <td>
+                                    72%
+                                </td>
+
+                                <td>
+                                    64%
+                                </td>
+
+                                <td>
+                                    Healthy
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status idle">
+                                        Warning
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <tr>
+
+                                <td>
+                                    SYS-000031
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-031
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    94%
+                                </td>
+
+                                <td>
+                                    91%
+                                </td>
+
+                                <td>
+                                    82%
+                                </td>
+
+                                <td>
+                                    Healthy
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status offline">
+                                        Critical
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+
+                            <tr>
+
+                                <td>
+                                    SYS-000047
+                                </td>
+
+                                <td>
+                                    LAB-A-PC-047
+                                </td>
+
+                                <td>
+                                    Cluster 1
+                                </td>
+
+                                <td>
+                                    68%
+                                </td>
+
+                                <td>
+                                    84%
+                                </td>
+
+                                <td>
+                                    91%
+                                </td>
+
+                                <td>
+                                    Healthy
+                                </td>
+
+                                <td>
+
+                                    <span class="table-status idle">
+                                        Warning
+                                    </span>
+
+                                </td>
+
+                                <td>
+
+                                    <a
+                                        href="system-details.html"
+                                        class="view-button"
+                                    >
+                                        View
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Agent Health -->
+            <div class="section-card">
+
+                <div class="table-header">
+
+                    <div>
+
+                        <h2>Monitoring Agent Health</h2>
+
+                        <span>
+                            Connection status of monitoring agents
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="agent-health-grid">
+
+
+                    <div class="agent-health-item">
+
+                        <span class="health-indicator online"></span>
+
+                        <div>
+
+                            <strong>SYS-000001</strong>
+
+                            <small>
+                                Last heartbeat 20 seconds ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="agent-health-item">
+
+                        <span class="health-indicator online"></span>
+
+                        <div>
+
+                            <strong>SYS-000002</strong>
+
+                            <small>
+                                Last heartbeat 35 seconds ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="agent-health-item">
+
+                        <span class="health-indicator offline"></span>
+
+                        <div>
+
+                            <strong>SYS-000031</strong>
+
+                            <small>
+                                No heartbeat for 3 minutes
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="agent-health-item">
+
+                        <span class="health-indicator online"></span>
+
+                        <div>
+
+                            <strong>SYS-000004</strong>
+
+                            <small>
+                                Last heartbeat 12 seconds ago
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+</body>
+
+</html>

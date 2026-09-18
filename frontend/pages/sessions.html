@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Sessions</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+
+            <h2>CampusWatch</h2>
+
+            <p>Campus Monitoring System</p>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                Dashboard
+            </a>
+
+            <a href="systems.html">
+                Systems
+            </a>
+
+            <a href="cluster.html">
+                Clusters
+            </a>
+
+            <a href="sessions.html" class="active">
+                Sessions
+            </a>
+
+            <a href="health.html">
+                System Health
+            </a>
+
+            <a href="issues.html">
+                Issues
+            </a>
+
+            <a href="reports.html">
+                Reports
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="notifications.html">
+                Notifications
+            </a>
+
+            <a href="login.html">
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+
+        <!-- Top Bar -->
+        <header class="topbar">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    placeholder="Search sessions..."
+                >
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="profile-icon">
+                    A
+                </div>
+
+                <div>
+
+                    <strong>Administrator</strong>
+
+                    <small>Admin</small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- Page Content -->
+        <section class="page-content">
+
+
+            <!-- Page Heading -->
+            <div class="page-heading">
+
+                <div>
+
+                    <h1>User Sessions</h1>
+
+                    <p>
+                        Monitor students currently using campus systems.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Session Summary -->
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+
+                        <span>Total Sessions</span>
+
+                        <strong>24</strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+
+                        <span>Active</span>
+
+                        <strong>18</strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+
+                        <span>Idle</span>
+
+                        <strong>6</strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+
+                        <span>Logged Out</span>
+
+                        <strong>72</strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Filters -->
+            <div class="session-filter">
+
+                <div>
+
+                    <label for="clusterFilter">
+                        Cluster
+                    </label>
+
+                    <select id="clusterFilter">
+
+                        <option value="all">
+                            All Clusters
+                        </option>
+
+                        <option value="cluster1">
+                            Cluster 1
+                        </option>
+
+                        <option value="cluster2">
+                            Cluster 2
+                        </option>
+
+                        <option value="cluster3">
+                            Cluster 3
+                        </option>
+
+                        <option value="cluster4">
+                            Cluster 4
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label for="statusFilter">
+                        Session Status
+                    </label>
+
+                    <select id="statusFilter">
+
+                        <option value="all">
+                            All Statuses
+                        </option>
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="idle">
+                            Idle
+                        </option>
+
+                        <option value="logged-out">
+                            Logged Out
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="session-search">
+
+                    <label for="sessionSearch">
+                        Search
+                    </label>
+
+                    <input
+                        type="text"
+                        id="sessionSearch"
+                        placeholder="Search student or system..."
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- Sessions Table -->
+            <div class="table-container">
+
+                <div class="table-header">
+
+                    <h2>Current Sessions</h2>
+
+                    <span>
+                        Showing active session records
+                    </span>
+
+                </div>
+
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Student</th>
+
+                            <th>System ID</th>
+
+                            <th>Hostname</th>
+
+                            <th>Cluster</th>
+
+                            <th>Table</th>
+
+                            <th>Status</th>
+
+                            <th>Login Time</th>
+
+                            <th>Duration</th>
+
+                            <th>Last Activity</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        <tr>
+
+                            <td>
+                                <strong>Student 001</strong>
+                            </td>
+
+                            <td>
+                                SYS-000001
+                            </td>
+
+                            <td>
+                                LAB-A-PC-001
+                            </td>
+
+                            <td>
+                                Cluster 1
+                            </td>
+
+                            <td>
+                                Table 1
+                            </td>
+
+                            <td>
+                                <span class="table-status online">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+                                09:14 AM
+                            </td>
+
+                            <td>
+                                2h 31m
+                            </td>
+
+                            <td>
+                                10 seconds ago
+                            </td>
+
+                            <td>
+                                <a
+                                    href="system-details.html"
+                                    class="view-button"
+                                >
+                                    View
+                                </a>
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+                                <strong>Student 002</strong>
+                            </td>
+
+                            <td>
+                                SYS-000002
+                            </td>
+
+                            <td>
+                                LAB-A-PC-002
+                            </td>
+
+                            <td>
+                                Cluster 1
+                            </td>
+
+                            <td>
+                                Table 1
+                            </td>
+
+                            <td>
+                                <span class="table-status online">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+                                09:32 AM
+                            </td>
+
+                            <td>
+                                2h 13m
+                            </td>
+
+                            <td>
+                                5 seconds ago
+                            </td>
+
+                            <td>
+                                <a
+                                    href="system-details.html"
+                                    class="view-button"
+                                >
+                                    View
+                                </a>
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+                                <strong>Student 003</strong>
+                            </td>
+
+                            <td>
+                                SYS-000003
+                            </td>
+
+                            <td>
+                                LAB-A-PC-003
+                            </td>
+
+                            <td>
+                                Cluster 1
+                            </td>
+
+                            <td>
+                                Table 1
+                            </td>
+
+                            <td>
+                                <span class="table-status idle">
+                                    Idle
+                                </span>
+                            </td>
+
+                            <td>
+                                08:51 AM
+                            </td>
+
+                            <td>
+                                2h 54m
+                            </td>
+
+                            <td>
+                                6 minutes ago
+                            </td>
+
+                            <td>
+                                <a
+                                    href="system-details.html"
+                                    class="view-button"
+                                >
+                                    View
+                                </a>
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+                                <strong>Student 004</strong>
+                            </td>
+
+                            <td>
+                                SYS-000004
+                            </td>
+
+                            <td>
+                                LAB-A-PC-004
+                            </td>
+
+                            <td>
+                                Cluster 1
+                            </td>
+
+                            <td>
+                                Table 2
+                            </td>
+
+                            <td>
+                                <span class="table-status online">
+                                    Active
+                                </span>
+                            </td>
+
+                            <td>
+                                09:47 AM
+                            </td>
+
+                            <td>
+                                1h 58m
+                            </td>
+
+                            <td>
+                                15 seconds ago
+                            </td>
+
+                            <td>
+                                <a
+                                    href="system-details.html"
+                                    class="view-button"
+                                >
+                                    View
+                                </a>
+                            </td>
+
+                        </tr>
+
+
+
+                        <tr>
+
+                            <td>
+                                <strong>Student 005</strong>
+                            </td>
+
+                            <td>
+                                SYS-000005
+                            </td>
+
+                            <td>
+                                LAB-A-PC-005
+                            </td>
+
+                            <td>
+                                Cluster 1
+                            </td>
+
+                            <td>
+                                Table 2
+                            </td>
+
+                            <td>
+                                <span class="table-status idle">
+                                    Idle
+                                </span>
+                            </td>
+
+                            <td>
+                                08:23 AM
+                            </td>
+
+                            <td>
+                                3h 22m
+                            </td>
+
+                            <td>
+                                7 minutes ago
+                            </td>
+
+                            <td>
+                                <a
+                                    href="system-details.html"
+                                    class="view-button"
+                                >
+                                    View
+                                </a>
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+</body>
+
+</html>
