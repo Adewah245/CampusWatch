@@ -16,14 +16,48 @@ The dashboard is a set of static files, so any web server can host it. It must
 be served over HTTP rather than opened as a `file://` path, because ES modules
 and `fetch` are both blocked on the `file://` scheme.
 
+### Locally, in one command
+
 ```bash
-# From the repository root.
-python3 -m http.server 8000 --directory frontend
+# Terminal 1 — the backend.
+cd backend && go run ./cmd/server
+
+# Terminal 2 — the dashboard, with /api forwarded to the backend.
+python3 frontend/serve.py
 ```
 
 Then open <http://localhost:8000/>.
 
-> **Serving it this way will not work yet.** See the next section.
+`serve.py` serves this directory and proxies `/api/*` to `127.0.0.1:8080`, so
+the browser sees a single origin and CORS never applies. It is a development
+tool only — it performs no TLS and no authentication of its own — but it is the
+quickest way to get a working dashboard, and it needs nothing installed.
+
+```bash
+python3 frontend/serve.py --port 9000          # a different port
+python3 frontend/serve.py --api http://127.0.0.1:9001   # a different backend
+python3 frontend/serve.py --help
+```
+
+### Serving the files yourself
+
+Any static file server works for the frontend half, but note that it cannot
+serve the API as well:
+
+```bash
+python3 -m http.server 8000 --directory frontend
+```
+
+> **This will load the sign-in page and nothing else.** `http.server` cannot
+> proxy, so `/api` has no backend behind it and every request fails with a
+> network error. Use `serve.py` for local work, or one of the two options below
+> for a real deployment.
+
+### Opening the backend's port by mistake
+
+`http://localhost:8080/` answers `404 page not found`. That is the *backend*,
+and it is correct: it serves no static files, only `/health` and `/api/v1/*`.
+The dashboard is this directory, served separately. Nothing is broken.
 
 ---
 
@@ -35,7 +69,8 @@ is exactly what the command above produces. This is a deliberate consequence of
 the backend's current middleware stack, not a bug in the dashboard, and the
 dashboard cannot work around it from the client side.
 
-There are two supported ways to run it.
+There are two supported ways to run it in production. (`serve.py` above is the
+local equivalent of Option A, without TLS.)
 
 ### Option A — reverse proxy (no backend changes)
 
@@ -140,6 +175,7 @@ cannot read `config.js` — see [`image/README.md`](image/README.md) for the lis
 | `js/ui.js` | Element building, formatting, badges, meters, tables, toasts |
 | `js/shell.js` | Shared header, navigation and page scaffold |
 | `js/pages/*.js` | One module per page |
+| `serve.py` | Local development server; not used in production |
 
 ---
 
