@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Register</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body class="auth-page">
+
+
+    <div class="auth-container">
+
+
+        <!-- Logo / Introduction -->
+        <div class="auth-header">
+
+            <h1>
+                Campus<span>Watch</span>
+            </h1>
+
+            <p>
+                Create your CampusWatch account
+            </p>
+
+        </div>
+
+
+
+        <!-- Registration Card -->
+        <div class="auth-card">
+
+            <h2>Create Account</h2>
+
+            <p class="auth-description">
+                Register as a campus user to access CampusWatch.
+            </p>
+
+
+            <form id="registerForm">
+
+
+                <!-- Full Name -->
+                <div class="form-group">
+
+                    <label for="fullName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- Email -->
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Enter your email address"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- Password -->
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+
+                    <label for="confirmPassword">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        placeholder="Confirm your password"
+                        required
+                    >
+
+                </div>
+
+
+
+                <!-- Account Type -->
+                <div class="form-group">
+
+                    <label for="accountType">
+                        Account Type
+                    </label>
+
+                    <select id="accountType" name="accountType">
+
+                        <option value="student">
+                            Student
+                        </option>
+
+                        <option value="operator">
+                            Operator
+                        </option>
+
+                    </select>
+
+                    <small class="form-help">
+                        Administrator accounts are created and managed separately.
+                    </small>
+
+                </div>
+
+
+
+                <!-- Terms -->
+                <div class="form-checkbox">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        name="terms"
+                        required
+                    >
+
+                    <label for="terms">
+                        I agree to the CampusWatch terms and conditions.
+                    </label>
+
+                </div>
+
+
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    class="auth-button"
+                >
+                    Create Account
+                </button>
+
+
+            </form>
+
+
+            <!-- Login Link -->
+            <div class="auth-footer">
+
+                <p>
+                    Already have an account?
+                    <a href="login.html">
+                        Login here
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Back to Home -->
+        <a href="../index.html" class="back-home">
+            ← Back to CampusWatch
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>
