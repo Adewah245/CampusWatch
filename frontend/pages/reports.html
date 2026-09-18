@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+  CampusWatch reports: usage, uptime, session, issue and after-hours summaries
+  for a chosen period.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- viewport-fit=cover activates the safe-area insets in css/main.css;
+         theme-color tints the browser chrome to match the header. -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1f25" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title>Reports · CampusWatch</title>
+    <!-- Brand mark first, bundled vector fallback second. See frontend/README.md. -->
+    <link rel="icon" href="../image/adewahlogo.png" type="image/png" />
+    <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../css/main.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="app__header" data-shell="header"></header>
+
+      <main class="app__main">
+        <div class="page__head" data-shell="heading"></div>
+        <div data-shell="content"></div>
+      </main>
+    </div>
+
+    <script type="module" src="../js/pages/reports.js"></script>
+  </body>
+</html>

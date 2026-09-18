@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+  CampusWatch sign-in page.
+
+  This is the entry point of the dashboard. It is the only page that does not
+  require an existing session.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!--
+      `viewport-fit=cover` lets the page paint into the display cutout, which is
+      what makes the safe-area insets in css/main.css resolve to a real value on
+      notched phones. Without it they are always zero and content slides under
+      the notch in landscape.
+
+      theme-color tints the browser's own chrome to match the sticky header.
+    -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1f25" media="(prefers-color-scheme: dark)" />
+    <!--
+      The dashboard displays the operational state of monitored machines, so it
+      must never be indexed or cached by an intermediary. The backend's
+      SecurityHeaders middleware sets the authoritative equivalents on API
+      responses; these cover the static pages the backend does not serve.
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title>Sign in · CampusWatch</title>
+    <!--
+      The brand mark is listed first so browsers use it; the bundled vector mark
+      follows as the fallback. Browsers pick the first icon they can load. These
+      filenames cannot be chosen by script — a favicon is read from markup — so
+      keep them in step with js/config.js if the logo is ever renamed.
+    -->
+    <link rel="icon" href="image/adewahlogo.png" type="image/png" />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/main.css" />
+    <!--
+      Optional deployment override, read by js/config.js before anything else
+      runs. Uncomment and set an absolute URL when the dashboard is served from
+      a different origin than the API and that origin is configured to send
+      CORS headers.
+
+      <script>window.CAMPUSWATCH_API_BASE = 'https://campuswatch.example.edu';</script>
+    -->
+  </head>
+  <body>
+    <main class="login">
+      <div class="login__panel">
+        <div class="login__brand">
+          <!--
+            Replaced by js/pages/login.js with the brand mark from config.js.
+            The vector mark here is the fallback shown if that script has not
+            run yet.
+          -->
+          <img src="assets/logo.svg" alt="" width="40" height="40" data-brand="login" />
+          <h1 class="login__title">CampusWatch</h1>
+        </div>
+        <p class="login__subtitle">Sign in to the monitoring dashboard.</p>
+
+        <!-- Populated by js/pages/login.js when a sign-in attempt fails. -->
+        <div id="login-error" class="login__error" role="alert" hidden></div>
+
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label class="field__label" for="email">Email</label>
+            <input
+              class="input"
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="username"
+              required
+              autofocus
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="password">Password</label>
+            <input
+              class="input"
+              id="password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+
+          <button class="btn login__submit" id="login-submit" type="submit">Sign in</button>
+        </form>
+
+        <p class="login__note">
+          Access is restricted to authorised CampusWatch operators. Sessions and
+          administrative actions are recorded in the audit log.
+        </p>
+      </div>
+    </main>
+
+    <script type="module" src="js/pages/login.js"></script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+<!--
+  CampusWatch mark: a display with a watchful eye, drawn as vectors so it stays
+  crisp at any size and needs no binary asset in the repository.
+
+  `currentColor` is used for the strokes so the mark inherits the surrounding
+  text colour and therefore follows the light and dark palettes automatically.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="CampusWatch">
+  <rect x="2" y="5" width="28" height="19" rx="3" fill="none" stroke="#1f5fbf" stroke-width="2.5" />
+  <path d="M13 28h6" fill="none" stroke="#1f5fbf" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M16 9.5c-3.2 0-5.6 2.6-6.6 5 1 2.4 3.4 5 6.6 5s5.6-2.6 6.6-5c-1-2.4-3.4-5-6.6-5z"
+        fill="none" stroke="#1f5fbf" stroke-width="2.2" stroke-linejoin="round" />
+  <circle cx="16" cy="14.5" r="2.1" fill="#1f5fbf" />
+</svg>

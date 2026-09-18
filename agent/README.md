@@ -52,15 +52,23 @@ go build ./...
 go test ./...
 
 # Build the binary the installers expect.
-go build -o campuswatch-agent ./cmd/campuswatch-agent
+go build -o campuswatch-agent .
 ```
 
 Cross-compiling for the supported deployment targets:
 
 ```bash
-GOOS=linux   GOARCH=amd64 go build -o campuswatch-agent-linux-amd64   ./cmd/campuswatch-agent
-GOOS=windows GOARCH=amd64 go build -o campuswatch-agent-windows-amd64.exe ./cmd/campuswatch-agent
+GOOS=linux   GOARCH=amd64 go build -o campuswatch-agent-linux-amd64     .
+GOOS=windows GOARCH=amd64 go build -o campuswatch-agent-windows-amd64.exe .
 ```
+
+> **The `-o campuswatch-agent` is not optional.** The entry point is the
+> `main.go` at the module root, so a plain `go build` names the binary after the
+> directory and produces `agent`. The installers in `../installer/` look for
+> `campuswatch-agent`. If you would rather not pass `-o`, the Linux installer
+> accepts `CAMPUSWATCH_AGENT_BINARY` and the Windows installer accepts
+> `-Binary` to point at a differently named file.
+
 
 ---
 
@@ -130,7 +138,7 @@ register a service, and start it. Uninstallers are provided alongside them.
 
 | Package | Responsibility |
 | ------- | -------------- |
-| `cmd/campuswatch-agent` | Wiring, the heartbeat and session loops, graceful shutdown |
+| `main.go` (module root) | Wiring, the heartbeat and session loops, graceful shutdown |
 | `internal/config` | Environment loading, validation, defaults |
 | `internal/identity` | Hostname, OS, OS version, device type, machine ID |
 | `internal/system` | Persisted installation identifier, uptime |

@@ -1,0 +1,1309 @@
+/* ==========================================================================
+   CampusWatch dashboard styles
+
+   Organised as: design tokens, reset, layout, header, components, page states,
+   utilities. There is no preprocessor and no build step, so custom properties
+   are used for everything that would otherwise be a variable.
+
+   Light and dark are both supported through prefers-color-scheme. The dark
+   palette is not an inversion of the light one: the status colours are
+   re-picked so they stay distinguishable against a dark surface and hold
+   contrast for the badge text.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Tells the browser to render its own UI — form controls, scrollbars, the
+     text cursor, the address bar in some mobile browsers — using the matching
+     light or dark variant. Without this, native selects and date pickers stay
+     light on a dark page, which looks broken on a phone. */
+  color-scheme: light dark;
+
+  /* Surfaces */
+  --surface-page: #f4f5f7;
+  --surface-card: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #eceef2;
+
+  /* Text */
+  --text-primary: #16181d;
+  --text-secondary: #4a5060;
+  --text-muted: #767d8d;
+
+  /* Lines */
+  --border: #d9dce3;
+  --border-strong: #b9bfcb;
+
+  /* Brand */
+  --brand: #1f5fbf;
+  --brand-strong: #16468c;
+  --brand-contrast: #ffffff;
+
+  /* Status tones. Each has a text/icon colour and a tinted background for
+     badges and meters. */
+  --ok: #157347;
+  --ok-bg: #e2f4ea;
+  --warn: #9a6400;
+  --warn-bg: #fdf0d5;
+  --danger: #b42318;
+  --danger-bg: #fde5e2;
+  --info: #1f5fbf;
+  --info-bg: #e3ecfa;
+  --muted: #5b6273;
+  --muted-bg: #e9ebf0;
+  --neutral: #4a5060;
+  --neutral-bg: #e9ebf0;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+
+  /* Type */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Shape */
+  --radius: 8px;
+  --radius-sm: 5px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.1);
+  --shadow-lg: 0 8px 24px rgba(16, 24, 40, 0.12);
+
+  /* Layout */
+  --page-max: 1280px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-page: #14161a;
+    --surface-card: #1c1f25;
+    --surface-raised: #22262d;
+    --surface-sunken: #171a1f;
+
+    --text-primary: #eef0f4;
+    --text-secondary: #b3b9c6;
+    --text-muted: #8b92a1;
+
+    --border: #2c313a;
+    --border-strong: #3d434f;
+
+    --brand: #6ea8fe;
+    --brand-strong: #8dbcff;
+    --brand-contrast: #10141a;
+
+    --ok: #6ee7a8;
+    --ok-bg: #14301f;
+    --warn: #f5c265;
+    --warn-bg: #3a2c10;
+    --danger: #ff8f85;
+    --danger-bg: #3d1a18;
+    --info: #8dbcff;
+    --info-bg: #16233a;
+    --muted: #a2a9b8;
+    --muted-bg: #262b33;
+    --neutral: #b3b9c6;
+    --neutral-bg: #262b33;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset
+   -------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--surface-page);
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+p {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Event payloads and other machine output are rendered verbatim. They must wrap
+   rather than push the page sideways on a narrow screen. */
+pre {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Visible focus for keyboard users on every interactive element. */
+:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. Layout
+   -------------------------------------------------------------------------- */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app__header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  /* `max()` keeps the normal spacing on every ordinary device and only adds
+     room where the display is cut away — the notch on a phone in landscape, or
+     the rounded corners. These insets read 0 unless the viewport meta tag opts
+     in with `viewport-fit=cover`, which all pages do. */
+  padding-top: max(var(--space-3), env(safe-area-inset-top));
+  padding-bottom: var(--space-3);
+  padding-left: max(var(--space-5), env(safe-area-inset-left));
+  padding-right: max(var(--space-5), env(safe-area-inset-right));
+  background: var(--surface-card);
+  border-bottom: 1px solid var(--border);
+}
+
+.app__main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-5);
+  padding-left: max(var(--space-5), env(safe-area-inset-left));
+  padding-right: max(var(--space-5), env(safe-area-inset-right));
+  padding-bottom: max(var(--space-6), env(safe-area-inset-bottom));
+}
+
+.page__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.page__title {
+  font-size: 1.5rem;
+}
+
+.page__subtitle {
+  margin-top: var(--space-1);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* --------------------------------------------------------------------------
+   4. Header, brand and navigation
+   -------------------------------------------------------------------------- */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 650;
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand__mark {
+  border-radius: var(--radius-sm);
+  /* The mark sits in a square box fixed by its width/height attributes.
+     `contain` keeps a non-square logo at its true proportions, letterboxing it
+     inside that box rather than squashing it — which is what a wide wordmark
+     would otherwise do. */
+  object-fit: contain;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-right: auto;
+}
+
+.nav__link {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.nav__link:hover {
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
+
+.nav__link.is-active {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+.header__account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.header__role {
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   5. Cards, grids and stats
+   -------------------------------------------------------------------------- */
+
+.card {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+}
+
+.card + .card {
+  margin-top: var(--space-4);
+}
+
+.card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.card__title {
+  font-size: 1rem;
+}
+
+.card__hint {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.grid--stats {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.grid--split {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.grid--halves {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .grid--split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.stat {
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: var(--space-4);
+}
+
+.stat__label {
+  display: block;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.stat__value {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 1.8rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat__foot {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+/* Tones applied to the stat value for the tiles that represent a problem. */
+.stat--ok .stat__value { color: var(--ok); }
+.stat--warn .stat__value { color: var(--warn); }
+.stat--danger .stat__value { color: var(--danger); }
+.stat--info .stat__value { color: var(--info); }
+
+/* A definition list used for detail views. */
+.detail-list {
+  display: grid;
+  grid-template-columns: minmax(120px, auto) minmax(0, 1fr);
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.detail-list dt {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.detail-list dd {
+  margin: 0;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+/* --------------------------------------------------------------------------
+   6. Badges and meters
+   -------------------------------------------------------------------------- */
+
+.badge {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  background: var(--neutral-bg);
+  color: var(--neutral);
+}
+
+.badge--ok { background: var(--ok-bg); color: var(--ok); }
+.badge--warn { background: var(--warn-bg); color: var(--warn); }
+.badge--danger { background: var(--danger-bg); color: var(--danger); }
+.badge--info { background: var(--info-bg); color: var(--info); }
+.badge--muted { background: var(--muted-bg); color: var(--muted); }
+.badge--neutral { background: var(--neutral-bg); color: var(--neutral); }
+
+.meter + .meter {
+  margin-top: var(--space-3);
+}
+
+.meter__head {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-1);
+}
+
+.meter__label {
+  color: var(--text-secondary);
+}
+
+.meter__value {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+}
+
+.meter__track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+
+.meter__fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--ok);
+}
+
+.meter__fill--ok { background: var(--ok); }
+.meter__fill--warn { background: var(--warn); }
+.meter__fill--danger { background: var(--danger); }
+
+/* --------------------------------------------------------------------------
+   7. Tables
+   -------------------------------------------------------------------------- */
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.table caption {
+  text-align: left;
+}
+
+.table th,
+.table td {
+  padding: var(--space-3);
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.table th {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  background: var(--surface-sunken);
+  white-space: nowrap;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background: var(--surface-sunken);
+}
+
+.table .is-numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.table__link {
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.table__link:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   8. Forms and buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--brand);
+  color: var(--brand-contrast);
+  font-size: 0.9rem;
+  font-weight: 550;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--brand-strong);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.btn--ghost:hover:not(:disabled) {
+  background: var(--surface-sunken);
+}
+
+.btn--small {
+  padding: var(--space-1) var(--space-3);
+  font-size: 0.82rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.field__label {
+  font-size: 0.85rem;
+  font-weight: 550;
+  color: var(--text-secondary);
+}
+
+.field__hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--brand);
+  outline: 2px solid transparent;
+  box-shadow: 0 0 0 3px var(--info-bg);
+}
+
+.textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-3);
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: flex-end;
+  margin-bottom: var(--space-4);
+}
+
+.filters .field {
+  margin-bottom: 0;
+  min-width: 160px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Tabs
+   -------------------------------------------------------------------------- */
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--space-4);
+}
+
+.tab {
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--text-primary);
+}
+
+.tab.is-active {
+  color: var(--brand);
+  border-bottom-color: var(--brand);
+}
+
+/* --------------------------------------------------------------------------
+   10. Page states and toasts
+   -------------------------------------------------------------------------- */
+
+.state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  text-align: center;
+  color: var(--text-secondary);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-card);
+}
+
+.state--error {
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.toasts {
+  position: fixed;
+  right: var(--space-4);
+  bottom: var(--space-4);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-width: min(380px, calc(100vw - 2 * var(--space-4)));
+}
+
+.toast {
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--neutral);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-lg);
+  font-size: 0.9rem;
+}
+
+.toast--success { border-left-color: var(--ok); }
+.toast--error { border-left-color: var(--danger); }
+.toast--info { border-left-color: var(--info); }
+
+/* --------------------------------------------------------------------------
+   11. Sign-in page
+   -------------------------------------------------------------------------- */
+
+.login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: var(--space-5);
+  background: var(--surface-page);
+}
+
+.login__panel {
+  width: 100%;
+  max-width: 380px;
+  padding: var(--space-6);
+  background: var(--surface-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+}
+
+.login__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+/* Same reasoning as .brand__mark: the logo is drawn in a fixed square box, so
+   `contain` letterboxes a non-square mark instead of distorting it. */
+.login__brand img {
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}
+
+.login__title {
+  font-size: 1.35rem;
+}
+
+.login__subtitle {
+  margin: var(--space-1) 0 var(--space-5);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.login__error {
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--danger-bg);
+  color: var(--danger);
+  font-size: 0.88rem;
+}
+
+.login__submit {
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+.login__note {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+/* --------------------------------------------------------------------------
+   12. Utilities
+   -------------------------------------------------------------------------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.stack > * + * {
+  margin-top: var(--space-4);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   13. Responsive behaviour
+
+   The dashboard is used on whatever is to hand: a phone while walking a lab
+   floor, a tablet bolted to a wall, a desktop in an office. Components are
+   fluid by default; these queries change only what genuinely cannot work at a
+   given width.
+
+     1600px and up   large desktop / wall display   more of the width is used
+      900px          two-column splits collapse
+      720px          phones and small tablets       tables become cards
+      480px          small phones                   two-up summary tiles
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Wider than a laptop: stop wasting the space.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 1600px) {
+  :root {
+    --page-max: 1520px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Phones and small tablets.
+
+   The centrepiece is the table. A seven-column table cannot be read on a 360px
+   screen — scrolling sideways loses track of which column a value belongs to.
+   Below this width the header row is hidden and each row becomes a card, with
+   the column name printed beside each value from the `data-label` attribute
+   that `table()` in js/ui.js sets on every cell.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  /* --- Tables as stacked cards --- */
+
+  .table thead {
+    /* Clipped rather than display:none, so the column headings stay available
+       to screen readers, which should still perceive a real table. */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .table-wrap {
+    overflow-x: visible;
+  }
+
+  .table,
+  .table tbody,
+  .table tr,
+  .table td {
+    display: block;
+    width: 100%;
+  }
+
+  .table tr {
+    margin-bottom: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface-card);
+  }
+
+  .table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Row highlighting is meaningless once rows are cards, and touch devices
+     give their own tap feedback anyway. */
+  .table tbody tr:hover {
+    background: var(--surface-card);
+  }
+
+  .table td {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+    border-bottom: 1px dashed var(--border);
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .table td:last-child {
+    border-bottom: none;
+  }
+
+  /* More specific than `.table .is-numeric`, so numbers align left along with
+     everything else once the column context is gone. */
+  .table td.is-numeric {
+    text-align: left;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    flex: 0 0 auto;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-secondary);
+  }
+
+  /* A cell with no value prints nothing, rather than a bare label. */
+  .table td:empty {
+    display: none;
+  }
+
+  /* --- Header --- */
+
+  .app__header {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  /* Navigation becomes one horizontally scrollable strip instead of wrapping
+     onto several rows, which would push the content down by a third of the
+     screen. The scrollbar is hidden because the clipped edge already signals
+     that the strip scrolls. */
+  .nav {
+    order: 3;
+    width: 100%;
+    margin-right: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav__link {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .app__main {
+    padding-top: var(--space-4);
+    padding-bottom: max(var(--space-4), env(safe-area-inset-bottom));
+    padding-left: max(var(--space-3), env(safe-area-inset-left));
+    padding-right: max(var(--space-3), env(safe-area-inset-right));
+  }
+
+  /* --- Layout --- */
+
+  .grid--split,
+  .grid--halves {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .page__head {
+    margin-bottom: var(--space-4);
+  }
+
+  .page__title {
+    font-size: 1.3rem;
+  }
+
+  /* A two-column label/value list leaves too little room for the value once
+     the label takes a third of a 360px screen. */
+  .detail-list {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+
+  .detail-list dt {
+    margin-top: var(--space-2);
+    font-weight: 600;
+  }
+
+  /* --- Forms and filters --- */
+
+  .form-row,
+  .filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* The filter bar is a flex row by default; as a grid its fields can be made
+     to fill the width without the `min-width` that forced overflow. */
+  .filters {
+    display: grid;
+  }
+
+  .filters .field {
+    min-width: 0;
+  }
+
+  .form-actions .btn {
+    flex: 1;
+  }
+
+  /* --- Tabs --- */
+
+  .tabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  /* --- Toasts --- */
+
+  .toasts {
+    left: var(--space-3);
+    right: var(--space-3);
+    bottom: max(var(--space-3), env(safe-area-inset-bottom));
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Small phones.
+
+   The summary tiles are the main change: eight of them one per row is a long
+   scroll before anything else is reachable, so they pair up. Body text is
+   deliberately left at its normal size — shrinking type on the smallest screen
+   makes the hardest case to read harder.
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 480px) {
+  .grid--stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .stat,
+  .card {
+    padding: var(--space-3);
+  }
+
+  .stat__value {
+    font-size: 1.35rem;
+  }
+
+  .login__panel {
+    padding: var(--space-5) var(--space-4);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Touch input.
+
+   Applies to any coarse pointer regardless of width — a tablet in landscape is
+   wide but still finger-driven. Controls are grown to the 44px minimum that
+   both Apple and Android recommend for a reliable tap.
+   -------------------------------------------------------------------------- */
+
+@media (pointer: coarse) {
+  .btn,
+  .btn--small,
+  .input,
+  .select,
+  .tab,
+  .nav__link {
+    min-height: 44px;
+  }
+
+  .btn,
+  .btn--small {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+
+  /* The tab underline sits on a border, so the tab needs to stay a flex box
+     for the label to remain vertically centred once it is taller. */
+  .tab {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Landscape phones.
+
+   A phone turned sideways is wide enough for the desktop header but only about
+   375px tall, which flips the constraint: vertical space is what is scarce, not
+   horizontal. The navigation therefore returns to a single row beside the brand
+   instead of taking a row of its own.
+
+   Declared after the 720px block so it wins at equal specificity.
+   -------------------------------------------------------------------------- */
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .app__header {
+    flex-wrap: nowrap;
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+  }
+
+  .nav {
+    order: 0;
+    width: auto;
+    margin-right: auto;
+  }
+
+  .app__main {
+    padding-top: var(--space-3);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   High-contrast and forced-colours mode.
+
+   Windows High Contrast and similar modes discard author colours, which leaves
+   the status badges as indistinguishable text — their whole point is the
+   colour. Outlining them with `currentColor` at least separates one from the
+   next, and the word itself is always present, so meaning is never carried by
+   colour alone.
+   -------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  .badge {
+    border: 1px solid currentColor;
+  }
+
+  .meter__track {
+    border: 1px solid currentColor;
+  }
+
+  /* The filled portion would otherwise be flattened into the track, making a
+     full meter look identical to an empty one. */
+  .meter__fill {
+    forced-color-adjust: none;
+  }
+
+  .card,
+  .stat,
+  .table tr {
+    border: 1px solid currentColor;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Print.
+
+   Reports exist partly to be printed or saved as a PDF — see the Print button
+   on the reports page. Chrome that only makes sense on screen is dropped, and
+   the palette is forced to black on white so a dark-theme user does not print
+   a page of solid ink.
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .app__header,
+  .nav,
+  .toasts,
+  .filters,
+  .page__actions,
+  .form-actions,
+  .tabs,
+  .state--loading {
+    display: none;
+  }
+
+  /* `.card__hint` is deliberately kept: on the reports page it carries the date
+     range the figures cover, which a printed report is meaningless without. */
+  .card__hint {
+    color: #333333;
+  }
+
+  :root {
+    --surface-page: #ffffff;
+    --surface-card: #ffffff;
+    --surface-sunken: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --text-muted: #333333;
+    --border: #999999;
+    --shadow: none;
+  }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+    font-size: 11pt;
+  }
+
+  .app__main {
+    max-width: none;
+    padding: 0;
+  }
+
+  .card,
+  .stat {
+    border: 1px solid #999999;
+    border-radius: 0;
+    box-shadow: none;
+    /* Avoids a card being split across two sheets where the browser allows it. */
+    break-inside: avoid;
+  }
+
+  /* Undo the on-screen table-to-card transformation: a printed page is wide
+     enough for real columns, and paper cannot scroll. */
+  .table thead {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+  }
+
+  .table,
+  .table thead,
+  .table tbody,
+  .table tr,
+  .table td,
+  .table th {
+    display: revert;
+  }
+
+  .table td::before {
+    content: none;
+  }
+
+  .table tr,
+  .table th,
+  .table td {
+    border: 1px solid #999999;
+  }
+
+  .badge {
+    border: 1px solid #000000;
+  }
+
+  /* Printed links are only useful if the destination is visible. Page-internal
+     links are left alone because their target is already on the paper. */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    word-break: break-all;
+  }
+}

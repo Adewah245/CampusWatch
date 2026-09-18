@@ -4,5 +4,12 @@ campuswatch-agent
 campuswatch-agent.exe
 campuswatch-agent-*
 
+# A plain `go build` names the binary after the module directory, producing
+# these. The documented build passes -o campuswatch-agent, so these only appear
+# when someone builds without it — ignored anyway so a stray artifact is never
+# committed.
+agent
+agent.exe
+
 # The persisted installation identifier, should a build ever be run in place.
 installation-id
