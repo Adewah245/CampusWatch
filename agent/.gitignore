@@ -1,0 +1,8 @@
+# Built agent binaries. The installers copy the binary themselves, so build
+# output is never committed.
+campuswatch-agent
+campuswatch-agent.exe
+campuswatch-agent-*
+
+# The persisted installation identifier, should a build ever be run in place.
+installation-id

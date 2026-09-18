@@ -65,10 +65,10 @@ func (s *AgentService) Approve(ctx context.Context, id string) (*model.AgentCred
 	}
 	agent, err := s.repo.Approve(ctx, id, hash)
 	if err != nil {
-		return nil, err
+	return nil, err
 	}
 	if agent == nil {
-		return nil, nil
+	return nil, nil
 	}
 	return &model.AgentCredentialResponse{Agent: *agent, Credential: credential}, nil
 }
