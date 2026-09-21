@@ -12,97 +12,93 @@ install, compile or audit beyond the files in this directory.
 
 ## Running it
 
-The dashboard is a set of static files, so any web server can host it. It must
-be served over HTTP rather than opened as a `file://` path, because ES modules
-and `fetch` are both blocked on the `file://` scheme.
+The dashboard is a set of static files, but it is not served separately. The Go
+backend serves this directory **and** the API, so there is one process, one port
+and one origin. It must be served over HTTP rather than opened as a `file://`
+path, because ES modules and `fetch` are both blocked on the `file://` scheme.
 
-### Locally, in one command
+### Locally
 
-Run both from the **repository root**.
+Run from the **repository root**:
 
 ```bash
-# Terminal 1 — the backend.
 go run ./backend/cmd/server
-
-# Terminal 2 — the dashboard, with /api forwarded to the backend.
-python3 frontend/serve.py
 ```
 
-Then open <http://localhost:8000/>.
+Then open <http://localhost:8080/>.
 
-Signing in needs an account to exist, and CampusWatch has no public registration — see
-the Quick Start in the [top-level README](../README.md#0-quick-start). A `401` from
-`/api/v1/auth/login` means no account exists yet, not that the password was mistyped.
-Create one with:
+`/` is a redirect to `/pages/dashboard.html`, so opening the site lands on the
+dashboard. Nothing needs installing beyond Go.
+
+An unauthenticated visitor is turned away by that page and lands on
+`/pages/login.html`. Signing in needs an account to exist, and the first one is
+created from the browser: the sign-in page links to `/pages/register.html`, which
+creates the administrator account and the institution it belongs to. It works
+only while no account exists — after that it answers `409` and says registration
+is closed — so it is a bootstrap step rather than a sign-up form.
+
+The registration page deliberately does not link back to sign-in: it sets a
+deployment up, it does not enter one. On success it hands off to sign-in so the
+new operator proves the credentials they just chose.
+
+Further accounts come from inside the dashboard or from `createuser`:
 
 ```bash
 CAMPUSWATCH_PASSWORD='choose-a-strong-password' \
 go run ./backend/cmd/createuser --email you@example.edu --institution 'Your Institution'
 ```
 
-`serve.py` serves this directory and proxies `/api/*` to `127.0.0.1:8080`, so
-the browser sees a single origin and CORS never applies. It is a development
-tool only — it performs no TLS and no authentication of its own — but it is the
-quickest way to get a working dashboard, and it needs nothing installed.
+A `401` from `/api/v1/auth/login` means no account exists yet, not that the
+password was mistyped.
+
+### Not serving the files separately
+
+A plain static server can host this directory, but it cannot serve the API as well
+— and three things the Go server does for these files would be missing:
 
 ```bash
-python3 frontend/serve.py --port 9000          # a different port
-python3 frontend/serve.py --api http://127.0.0.1:9001   # a different backend
-python3 frontend/serve.py --help
+python3 -m http.server 8000 --directory frontend   # don't
 ```
 
-### Serving the files yourself
+- `/api` has no backend behind it, so every request fails with a network error.
+- `/` answers with a file listing, because there is no `index.html` here — the
+  root is a redirect the Go server performs.
+- Every subdirectory lists its contents, for the same reason.
 
-Any static file server works for the frontend half, but note that it cannot
-serve the API as well:
-
-```bash
-python3 -m http.server 8000 --directory frontend
-```
-
-> **This will load the sign-in page and nothing else.** `http.server` cannot
-> proxy, so `/api` has no backend behind it and every request fails with a
-> network error. Use `serve.py` for local work, or one of the two options below
-> for a real deployment.
-
-### Opening the backend's port by mistake
-
-`http://localhost:8080/` answers `404 page not found`. That is the *backend*,
-and it is correct: it serves no static files, only `/health` and `/api/v1/*`.
-The dashboard is this directory, served separately. Nothing is broken.
+Use the Go server. Set `FRONTEND_DIR` to point it at a different dashboard
+directory, for example when the binary and the dashboard are deployed separately.
 
 ---
 
 ## Required: same-origin with the API
 
 The backend sends **no CORS headers**. A browser will therefore refuse to let a
-page on `localhost:8000` read responses from an API on `localhost:8080` — which
-is exactly what the command above produces. This is a deliberate consequence of
-the backend's current middleware stack, not a bug in the dashboard, and the
-dashboard cannot work around it from the client side.
+dashboard on one origin read responses from an API on another.
 
-There are two supported ways to run it in production. (`serve.py` above is the
-local equivalent of Option A, without TLS.)
+The Go server satisfies this by default: it serves this directory and the API from
+the same origin, so the local command above works as shipped and `API_BASE` stays
+empty. The requirement below only bites if you serve the dashboard from somewhere
+else — a different port, or a CDN.
 
-### Option A — reverse proxy (no backend changes)
+There are two supported ways to do that. (Option A is also how you would put TLS in
+front of the Go server, which speaks plain HTTP.)
 
-Serve the dashboard and the API from one origin, with the proxy forwarding
-`/api` to the backend. Leave `API_BASE` empty (its default) so requests are
-same-origin.
+### Option A — reverse proxy (recommended)
 
-An `nginx` location block that does this:
+Forward everything to the Go server, which already serves the dashboard and the API
+from one origin. Leave `API_BASE` empty (its default) so requests are same-origin.
+
+An `nginx` location block that does this, and terminates TLS the Go server does not:
 
 ```nginx
 server {
     listen 443 ssl;
     server_name campuswatch.example.edu;
 
-    root /srv/campuswatch/frontend;
-    index index.html;
-
-    # The API lives behind the same origin, so the browser sees no cross-origin
-    # request at all and CORS never applies.
-    location /api/ {
+    # Everything goes to the Go server, which serves both the dashboard and the
+    # API from this one origin, so the browser sees no cross-origin request at
+    # all and CORS never applies.
+    location / {
         proxy_pass http://127.0.0.1:8080;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -112,7 +108,13 @@ server {
 }
 ```
 
-### Option B — add CORS to the backend
+Forwarding everything rather than serving the files from a `root` and proxying only
+`/api/` is deliberate. The Go server's static handler also answers `/` with the
+redirect to the dashboard and refuses directory listings; a proxy that served the
+files itself would have to reproduce both, and would be a second copy of the
+dashboard to keep in step.
+
+### Option B — a separate origin for the dashboard
 
 If the dashboard must be served from a different origin, the backend needs a
 CORS middleware that:
@@ -140,7 +142,9 @@ will fail with a network error.
 | `DASHBOARD_REFRESH_MS` | `30000` | How often the dashboard refreshes itself; `0` disables it |
 
 To point a build at an absolute API URL without editing the file, uncomment the
-inline script in `index.html`:
+inline script in the page's HTML. Every page carries it, and a page served from
+somewhere other than the Go server needs it in all of them (or can set the
+`localStorage` key once instead):
 
 ```html
 <script>window.CAMPUSWATCH_API_BASE = 'https://campuswatch.example.edu';</script>
@@ -156,7 +160,7 @@ and resolved by `brandMark()` in `js/ui.js`.
 
 If the file cannot be loaded, every page falls back to `assets/logo.svg`
 automatically, so a renamed or missing logo never produces a broken image. The
-fallback filenames appear in the favicon tags of all seven HTML files, which
+fallback filenames appear in the favicon tags of all eight HTML files, which
 cannot read `config.js` — see [`image/README.md`](image/README.md) for the list.
 
 > **The current logo is 418 KB** for a mark rendered at 28–40px. Resizing to
@@ -167,10 +171,15 @@ cannot read `config.js` — see [`image/README.md`](image/README.md) for the lis
 
 ## Pages
 
+Every page lives in `pages/`, which is why each one references assets as
+`../css/main.css` and `../js/pages/….js`. They all link to each other by bare
+sibling filename.
+
 | File | Purpose |
 | ---- | ------- |
-| `index.html` | Sign in |
-| `pages/dashboard.html` | Fleet summary, systems needing attention, open issues |
+| `pages/dashboard.html` | Fleet summary, systems needing attention, open issues. What `/` redirects to |
+| `pages/login.html` | Sign in. Also the way to the first-run setup |
+| `pages/register.html` | First-run registration: creates the administrator for a new deployment |
 | `pages/systems.html` | Every registered system, with search and status filter |
 | `pages/system.html?id=` | One system: health, login history, events, status editor |
 | `pages/issues.html` | The maintenance queue, with create and progress notes |
@@ -187,7 +196,6 @@ cannot read `config.js` — see [`image/README.md`](image/README.md) for the lis
 | `js/ui.js` | Element building, formatting, badges, meters, tables, toasts |
 | `js/shell.js` | Shared header, navigation and page scaffold |
 | `js/pages/*.js` | One module per page |
-| `serve.py` | Local development server; not used in production |
 
 ---
 
@@ -250,7 +258,7 @@ trade-off rather than an oversight.
 
 - Controls reach the 44px minimum tap target on any coarse pointer, including
   wide tablets where the width-based breakpoints would not fire.
-- All seven pages set `viewport-fit=cover`, which is what makes the
+- All eight pages set `viewport-fit=cover`, which is what makes the
   `env(safe-area-inset-*)` padding resolve on notched phones. Without it those
   insets are always zero and content slides under the notch in landscape.
 - `color-scheme: light dark` makes native controls, scrollbars and the mobile
@@ -295,8 +303,13 @@ These are gaps in the current backend API, not dashboard choices.
    notes added during the current browser session, labelled as such. Showing the
    full history needs a `GET /api/v1/issues/{id}/updates` endpoint.
 
-2. **The backend serves no static files.** There is no route for the dashboard
-   itself, so it must be hosted separately — hence the proxy in Option A.
+2. **An agent cannot enrol itself, and nothing in the dashboard can enrol it.**
+   `POST /api/v1/agents` issues an agent credential and `POST
+   /api/v1/agents/{id}/approve` issues another on approval; both have to happen
+   before a machine reports anything. The dashboard has no screen for either, so
+   today they are done with `curl` and the credential is carried to the machine by
+   hand. Until that has happened a system is silent, which is why every question
+   about a machine being online or in use depends on it.
 
 3. **System registration needs a `location_id`.** Creating a system requires a
    location to exist first, so the hierarchy page has to be populated before

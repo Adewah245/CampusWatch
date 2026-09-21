@@ -51,13 +51,30 @@ func SystemByIDHandler(svc *service.SystemService, extras ...any) http.HandlerFu
 		id := parts[0]
 		var sessionService *service.UserSessionService
 		var eventService *service.EventService
+		var agentService *service.AgentService
 		for _, extra := range extras {
 			switch value := extra.(type) {
 			case *service.UserSessionService:
 				sessionService = value
 			case *service.EventService:
 				eventService = value
+			case *service.AgentService:
+				agentService = value
 			}
+		}
+		if len(parts) == 2 && parts[1] == "agents" && agentService != nil {
+			if r.Method != http.MethodGet {
+				http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+				return
+			}
+			agents, err := agentService.ListBySystem(r.Context(), id)
+			if err != nil {
+				http.Error(w, err.Error(), http.StatusBadRequest)
+				return
+			}
+			w.Header().Set("Content-Type", "application/json")
+			_ = json.NewEncoder(w).Encode(agents)
+			return
 		}
 		if len(parts) == 2 && parts[1] == "sessions" && sessionService != nil {
 			if r.Method != http.MethodGet {

@@ -77,7 +77,7 @@ export function mustFind(selector) {
  * that a strict Content-Security-Policy without `unsafe-inline` still works.
  *
  * @param {string} prefix path from the calling page to the frontend root:
- *   `''` from index.html, `'../'` from a page in pages/.
+ *   `'../'` from a page in pages/, which is every page that calls this.
  * @param {object} [options]
  * @param {number} [options.size] rendered size in pixels
  * @param {string|null} [options.className]
@@ -420,4 +420,112 @@ export function markActiveNav(activePage) {
     link.classList.toggle('is-active', isActive);
     if (isActive) link.setAttribute('aria-current', 'page');
   }
+}
+
+// ---------------------------------------------------------------------------
+// Password visibility
+// ---------------------------------------------------------------------------
+
+/** Namespace for the inline icon markup below. */
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+/**
+ * Builds the eye / crossed-out eye the password toggle shows.
+ *
+ * Inline SVG rather than an icon font or an image file: the frontend has no
+ * build step and no icon set, and a two-path icon is smaller than the request
+ * that would fetch it. `aria-hidden` because the button carries the words — an
+ * icon alone is not an accessible name.
+ *
+ * @param {boolean} revealed whether the password is currently visible
+ * @returns {SVGElement}
+ */
+function eyeIcon(revealed) {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+  svg.setAttribute('aria-hidden', 'true');
+
+  const add = (tag, attrs) => {
+    const node = document.createElementNS(SVG_NS, tag);
+    for (const [name, value] of Object.entries(attrs)) node.setAttribute(name, value);
+    svg.append(node);
+  };
+
+  if (revealed) {
+    // Eye with a slash: the password is on screen, so the button hides it.
+    add('path', {
+      d: 'M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24',
+    });
+    add('line', { x1: '1', y1: '1', x2: '23', y2: '23' });
+  } else {
+    add('path', { d: 'M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z' });
+    add('circle', { cx: '12', cy: '12', r: '3' });
+  }
+
+  return svg;
+}
+
+/**
+ * Adds a show/hide button to a password input.
+ *
+ * The point is typing accuracy: a password field is the one place where the
+ * operator cannot see their own mistake, and on a registration form they have
+ * to reproduce it exactly a second time. Revealing it is a deliberate,
+ * reversible act with a visible state, so the toggle reports `aria-pressed`
+ * and changes its label rather than only its icon.
+ *
+ * Reverting to `password` on every page load is intentional: nothing here
+ * remembers the choice, so a revealed password is never left on screen for the
+ * next person at the machine.
+ *
+ * Expects the input to sit in a `.field__control` wrapper (see css/main.css);
+ * returns null if it does not, because a caller that forgot the wrapper should
+ * not get a button floating in the wrong place.
+ *
+ * @param {HTMLInputElement} input
+ * @returns {HTMLButtonElement|null}
+ */
+export function attachPasswordToggle(input) {
+  const wrapper = input.parentElement;
+  if (!wrapper || !wrapper.classList.contains('field__control')) return null;
+
+  input.classList.add('input--with-toggle');
+
+  // The accessible name lives in text, not in the icon: "Show password" /
+  // "Hide password" is what a screen reader announces, and it flips with the
+  // state. `.sr-only` keeps it out of the visual layout, which the icon fills.
+  const label = document.createElement('span');
+  label.className = 'sr-only';
+  label.textContent = 'Show password';
+
+  const button = el(
+    'button',
+    {
+      type: 'button',
+      class: 'field__toggle',
+      'aria-pressed': 'false',
+      onclick: () => {
+        const revealed = input.type === 'text';
+        input.type = revealed ? 'password' : 'text';
+        button.setAttribute('aria-pressed', String(!revealed));
+        label.textContent = revealed ? 'Show password' : 'Hide password';
+        button.replaceChildren(eyeIcon(!revealed), label);
+        // Takes the focus back off the button. Clicking it would otherwise
+        // leave focus there, so the operator would type into nothing until they
+        // noticed and clicked back into the field. The cost is that a keyboard
+        // operator needs one Shift+Tab to toggle a second time, which is the
+        // cheaper of the two.
+        input.focus();
+      },
+    },
+    [eyeIcon(false), label],
+  );
+
+  wrapper.append(button);
+  return button;
 }

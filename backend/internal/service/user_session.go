@@ -38,6 +38,13 @@ func (s *UserSessionService) Record(ctx context.Context, agentCode, credential s
 		return nil, errors.New("session identity does not match agent")
 	}
 	input.Event = strings.ToLower(strings.TrimSpace(input.Event))
+	// The agent names its transitions with the same vocabulary the events endpoint
+	// accepts — USER_LOGIN, USER_LOGOUT, USER_IDLE, USER_ACTIVE (see EventUserLogin
+	// and friends in agent/internal/client/protocol.go, and validEventType in
+	// event.go). Lowercasing alone left "user_login", which matched none of the
+	// cases below and rejected every session event an agent ever sent. The short
+	// forms are kept because hand-written clients use them.
+	input.Event = strings.TrimPrefix(input.Event, "user_")
 	if input.Timestamp.IsZero() {
 		input.Timestamp = time.Now().UTC()
 	}

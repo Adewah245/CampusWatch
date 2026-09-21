@@ -54,6 +54,31 @@ func (r *AgentRepository) List(ctx context.Context) ([]model.Agent, error) {
 	return agents, nil
 }
 
+// ListBySystem returns the agents registered against one system, newest first.
+//
+// The dashboard's system page needs one system's agent, and the only alternative
+// — listing every agent and filtering in the browser — would hand a page about a
+// single machine the whole fleet's credentials metadata.
+func (r *AgentRepository) ListBySystem(ctx context.Context, systemID string) ([]model.Agent, error) {
+	rows, err := r.db.QueryContext(ctx, `SELECT `+agentColumns+` FROM agents WHERE system_id = $1 ORDER BY created_at DESC`, systemID)
+	if err != nil {
+		return nil, fmt.Errorf("query agents for system: %w", err)
+	}
+	defer rows.Close()
+	var agents []model.Agent
+	for rows.Next() {
+		value, err := scanAgent(rows)
+		if err != nil {
+			return nil, fmt.Errorf("scan agent: %w", err)
+		}
+		agents = append(agents, *value)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate agents: %w", err)
+	}
+	return agents, nil
+}
+
 func (r *AgentRepository) Approve(ctx context.Context, id, credentialHash string) (*model.Agent, error) {
 	row := r.db.QueryRowContext(ctx, `UPDATE agents SET status = 'approved', credential_hash = $1, updated_at = NOW() WHERE id = $2 RETURNING `+agentColumns, credentialHash, id)
 	value, err := scanAgent(row)

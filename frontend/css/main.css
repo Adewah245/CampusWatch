@@ -616,6 +616,55 @@ textarea {
   color: var(--text-muted);
 }
 
+/* Wrapper for an input that carries a button inside its right edge.
+   It exists so the button positions against the input's own box: anchoring to
+   .field instead would drift as soon as a hint or an error line changes the
+   field's height. */
+.field__control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Show/hide control for a password input. Built by attachPasswordToggle in
+   js/ui.js, so a page without script simply has no button — the input still
+   works, which is the correct fallback for a visibility toggle. */
+.field__toggle {
+  position: absolute;
+  right: var(--space-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.field__toggle:hover {
+  background: var(--surface-sunken);
+  color: var(--text-primary);
+}
+
+.field__toggle:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+}
+
+.field__toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Keeps the end of a long password from sliding under the button. */
+.input--with-toggle {
+  padding-right: calc(var(--space-3) + 28px);
+}
+
 .input,
 .select,
 .textarea {
@@ -811,6 +860,9 @@ textarea {
   background: var(--danger-bg);
   color: var(--danger);
   font-size: 0.88rem;
+  /* These messages now quote the server, and a quoted URL has no space in it to
+     wrap at, so it would otherwise push the panel wider than the viewport. */
+  overflow-wrap: anywhere;
 }
 
 .login__submit {
@@ -1128,8 +1180,15 @@ textarea {
   .input,
   .select,
   .tab,
-  .nav__link {
+  .nav__link,
+  .field__toggle {
     min-height: 44px;
+  }
+
+  /* Grown with the input it sits in, so the target stays a full finger-width
+     rather than the 32px that is comfortable under a mouse. */
+  .field__toggle {
+    width: 44px;
   }
 
   .btn,

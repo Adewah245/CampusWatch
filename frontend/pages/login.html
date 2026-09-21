@@ -2,8 +2,10 @@
 <!--
   CampusWatch sign-in page.
 
-  This is the entry point of the dashboard. It is the only page that does not
-  require an existing session.
+  This is where the dashboard guard sends a visitor it cannot authenticate, so
+  it is the front door in practice: the root of the site redirects to the
+  dashboard, and the dashboard comes here. It is also the way into a first-run
+  setup, since the link to the registration page lives here.
 -->
 <html lang="en">
   <head>
@@ -21,9 +23,13 @@
     <meta name="theme-color" content="#1c1f25" media="(prefers-color-scheme: dark)" />
     <!--
       The dashboard displays the operational state of monitored machines, so it
-      must never be indexed or cached by an intermediary. The backend's
-      SecurityHeaders middleware sets the authoritative equivalents on API
-      responses; these cover the static pages the backend does not serve.
+      must never be indexed or cached by an intermediary. SecurityHeaders in the
+      backend sets the authoritative equivalents on every response it serves,
+      including this page; these cover the case of the files being served by
+      something else.
+
+      This page is reached with ?next=, ?reason= and ?registered=, so the URL
+      itself is also worth keeping out of an index.
     -->
     <meta name="robots" content="noindex, nofollow" />
     <meta http-equiv="Cache-Control" content="no-store" />
@@ -34,9 +40,9 @@
       filenames cannot be chosen by script — a favicon is read from markup — so
       keep them in step with js/config.js if the logo is ever renamed.
     -->
-    <link rel="icon" href="image/adewahlogo.png" type="image/png" />
-    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="../image/adewahlogo.png" type="image/png" />
+    <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../css/main.css" />
     <!--
       Optional deployment override, read by js/config.js before anything else
       runs. Uncomment and set an absolute URL when the dashboard is served from
@@ -55,13 +61,15 @@
             The vector mark here is the fallback shown if that script has not
             run yet.
           -->
-          <img src="assets/logo.svg" alt="" width="40" height="40" data-brand="login" />
+          <img src="../assets/logo.svg" alt="" width="40" height="40" data-brand="login" />
           <h1 class="login__title">CampusWatch</h1>
         </div>
         <p class="login__subtitle">Sign in to the monitoring dashboard.</p>
 
         <!-- Populated by js/pages/login.js when a sign-in attempt fails. -->
         <div id="login-error" class="login__error" role="alert" hidden></div>
+        <!-- Populated by js/pages/login.js after a successful registration. -->
+        <div id="login-notice" class="login__note" role="status" hidden></div>
 
         <form id="login-form" novalidate>
           <div class="field">
@@ -79,18 +87,27 @@
 
           <div class="field">
             <label class="field__label" for="password">Password</label>
-            <input
-              class="input"
-              id="password"
-              name="password"
-              type="password"
-              autocomplete="current-password"
-              required
-            />
+            <!-- Wrapper for the show/hide button built by js/pages/login.js. -->
+            <div class="field__control">
+              <input
+                class="input"
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+              />
+            </div>
           </div>
 
           <button class="btn login__submit" id="login-submit" type="submit">Sign in</button>
         </form>
+
+        <p class="login__note">
+          Setting this deployment up for the first time?
+          <a href="register.html">Create the administrator account</a>.
+          That page closes itself as soon as one account exists.
+        </p>
 
         <p class="login__note">
           Access is restricted to authorised CampusWatch operators. Sessions and
@@ -99,6 +116,6 @@
       </div>
     </main>
 
-    <script type="module" src="js/pages/login.js"></script>
+    <script type="module" src="../js/pages/login.js"></script>
   </body>
 </html>

@@ -17,7 +17,8 @@ CampusWatch is built to support **multiple institutions from one platform**, whi
 
 # 0. Quick Start
 
-**Prerequisites:** Go 1.26+, Python 3.9+ (for the development dashboard server).
+**Prerequisites:** Go 1.26+. Nothing else — the one server serves the dashboard as well
+as the API.
 
 Every command below runs from the **repository root**.
 
@@ -28,26 +29,35 @@ cp backend/.env.example backend/.env
 ```
 
 ```bash
-# 2. Create the first operator account. This also creates the institution, and
-#    applies the database migrations, so it is safe to run against a fresh
-#    database.
+# 2. Start the server. One process serves the API and the dashboard, and it
+#    applies the database migrations on startup, so a fresh database is fine.
+go run ./backend/cmd/server      # API and dashboard on :8080
+```
+
+Then open <http://localhost:8080/>. That redirects to
+`/pages/dashboard.html`, and an unauthenticated visitor is in turn sent to the
+sign-in page at `/pages/login.html`.
+
+Signing in needs an account to exist. The first one is created from the browser:
+the sign-in page links to `/pages/register.html`, which creates the administrator
+account for the institution — the only account that page will ever create. It
+closes itself as soon as one account exists, every later attempt is refused, and
+further accounts are added from inside the dashboard or with `createuser` (see
+below).
+
+```bash
+# Optional: create an account from the command line instead. Useful for
+# scripting a deployment, adding accounts after the first, or recovering a
+# deployment whose registration page has already been used.
 CAMPUSWATCH_PASSWORD='choose-a-strong-password' \
 go run ./backend/cmd/createuser \
     --email admin@adewah.edu \
     --institution 'Adewah University'
 ```
 
-```bash
-# 3. Start the API and the dashboard, in two terminals.
-go run ./backend/cmd/server      # terminal 1 - API on :8080
-python3 frontend/serve.py        # terminal 2 - dashboard on :8000
-```
-
-Then open <http://localhost:8000/> and sign in with the account from step 2.
-
-`serve.py` serves the dashboard and forwards `/api/*` to the backend, so the browser sees a
-single origin and CORS never applies. It is a development convenience — see
-[frontend/README.md](frontend/README.md) for the production arrangement.
+The dashboard is served from the same origin as the API, so the browser sees a single
+origin and CORS never applies. Set `FRONTEND_DIR` to serve the dashboard from somewhere
+else; see [frontend/README.md](frontend/README.md) for deployment.
 
 > **Sign-in returns 401?** That means no account exists yet, not that the password is wrong.
 > Run step 2 and try again. The dashboard needs an account with the `admin` or `manager`
@@ -1082,10 +1092,35 @@ The backend is responsible for:
 # 27. Authentication API
 
 ```text
+POST /api/v1/auth/register
 POST /api/v1/auth/login
 POST /api/v1/auth/logout
 GET  /api/v1/auth/me
 ```
+
+`POST /api/v1/auth/register` creates the deployment's first account and the
+institution it belongs to, and grants that account the `admin` role. It is a
+bootstrap endpoint, not an open sign-up:
+
+```json
+{
+  "institution": "Adewah University",
+  "first_name": "Amina",
+  "last_name": "Dewah",
+  "email": "admin@adewah.edu",
+  "password": "at-least-twelve-characters"
+}
+```
+
+* It succeeds only while the `users` table is empty, and answers
+  `409 Conflict` once any account exists. The check runs inside a transaction
+  holding a `pg_advisory_xact_lock`, so two simultaneous first requests cannot
+  both create an administrator.
+* It returns `201 Created` with the new user and institution identifiers, and
+  deliberately **no session token** — the operator signs in through
+  `POST /api/v1/auth/login` with the credentials they just chose.
+* There is no `role` field: the first account is always an `admin`. Every later
+  account is created from inside the dashboard or with `cmd/createuser`.
 
 Authentication architecture will support appropriate institutional roles.
 
@@ -1135,10 +1170,23 @@ POST /api/v1/systems/{id}/approve
 # 32. Agent API
 
 ```text
-POST /api/v1/agents/register
+GET   /api/v1/agents
+POST  /api/v1/agents                 register an agent; returns its credential once
+POST  /api/v1/agents/{id}/approve    approve it; reissues the credential, shown once
+
 POST /api/v1/agents/heartbeat
 POST /api/v1/agents/session
+POST /api/v1/agents/event
 ```
+
+Registration and approval are administrative: both sit behind
+`RequireRole("admin", "manager")` and are performed by an operator. The three
+reporting endpoints authenticate instead with the `X-Agent-Code` and
+`X-Agent-Credential` headers rather than a session token, because an agent runs
+on a monitored machine with nobody signed in. A heartbeat is accepted only once
+the agent's status is `approved`; an agent registers as `pending`, and approval
+reissues its credential, so the value returned at registration is not the one the
+agent ends up using.
 
 Additional agent endpoints may be added as the agent architecture becomes more complete.
 

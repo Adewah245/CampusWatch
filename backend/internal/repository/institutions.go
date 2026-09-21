@@ -137,7 +137,8 @@ func (r *InstitutionRepository) FindBySlug(ctx context.Context, slug string) (*m
 	return &institution, nil
 }
 
-// Update changes the allowed fields for an institution and returns the updated record.func (r *InstitutionRepository) Update(ctx context.Context, id string, input model.UpdateInstitutionRequest) (*model.Institution, error) {
+// Update changes the allowed fields for an institution and returns the updated record.
+func (r *InstitutionRepository) Update(ctx context.Context, id string, input model.UpdateInstitutionRequest) (*model.Institution, error) {
 	query := `
 		UPDATE institutions
 		SET name = COALESCE($1, name),

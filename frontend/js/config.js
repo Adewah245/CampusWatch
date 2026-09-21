@@ -59,9 +59,9 @@ export const DASHBOARD_REFRESH_MS = 30000;
  * The institution's brand mark.
  *
  * Both paths are relative to the frontend root, so callers only supply a prefix
- * for their own depth (`''` from `index.html`, `'../'` from `pages/`). Keeping
- * them whole here means the two files can live in different directories — as
- * they do — without every caller having to know that.
+ * for their own depth (`'../'` from every page in `pages/`). Keeping them whole
+ * here means the two files can live in different directories — as they do —
+ * without every caller having to know that.
  *
  * `BRAND_MARK` is the institution's logo. It is displayed wherever the
  * CampusWatch mark appears. `BRAND_MARK_FALLBACK` is used if it cannot be

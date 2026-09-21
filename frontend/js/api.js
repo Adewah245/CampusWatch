@@ -53,25 +53,38 @@ export class ApiError extends Error {
 /**
  * Pulls a human-readable message out of an error response body.
  *
- * The backend returns `{"error": "..."}` for handled failures, but a proxy or
- * a panic can return HTML or an empty body, so this falls back to the status
- * text rather than assuming the shape.
+ * The backend does not use one shape. Handlers that parse a request body reply
+ * with JSON, but the rest report failures through Go's `http.Error`, which
+ * sends `text/plain` — so the useful sentence ("password must be at least 12
+ * characters") arrives as a bare line of text, not as `{"error": ...}`. Both
+ * are read here, because a page that can only show "Bad Request" leaves the
+ * operator with nothing to act on.
+ *
+ * A body is only echoed when it is short and looks like prose. That excludes
+ * the two other things that can come back on a failure: an HTML error page from
+ * a proxy, and a stack of JSON the caller is not meant to read.
  *
  * @param {Response} response
  * @param {string} rawBody
  * @returns {string}
  */
 function describeFailure(response, rawBody) {
-  if (rawBody) {
-    try {
-      const parsed = JSON.parse(rawBody);
-      const message = parsed?.error || parsed?.message;
-      if (typeof message === 'string' && message.trim()) return message;
-    } catch {
-      // Not JSON. Fall through to the status text.
-    }
+  const fallback = response.statusText || `Request failed with status ${response.status}`;
+  if (!rawBody) return fallback;
+
+  let parsed;
+  try {
+    parsed = JSON.parse(rawBody);
+  } catch {
+    // Not JSON. Go's http.Error sends plain text, which is the common case.
+    const text = rawBody.trim();
+    if (text.length > 0 && text.length <= 200 && !text.includes('<')) return text;
+    return fallback;
   }
-  return response.statusText || `Request failed with status ${response.status}`;
+
+  const message = parsed?.error || parsed?.message;
+  if (typeof message === 'string' && message.trim()) return message;
+  return fallback;
 }
 
 /**
@@ -89,7 +102,7 @@ async function readBody(response) {
   } catch {
     // A non-JSON success body would mean the frontend is pointed at something
     // that is not the CampusWatch API — most often a static file server that
-    // answered the request with index.html. Say so rather than failing opaquely.
+    // answered the request with a page. Say so rather than failing opaquely.
     throw new ApiError(
       'The server returned a response the dashboard could not read. Check that the API base URL points at the CampusWatch backend.',
       response.status,
@@ -219,6 +232,20 @@ export const api = {
   /** Signs in and returns `{token, user_id, institution_id, role, expires_at}`. */
   login: (email, password) =>
     request('/auth/login', { method: 'POST', body: { email, password }, auth: false }),
+
+  /**
+   * Creates the deployment's first administrator.
+   *
+   * Succeeds only while the deployment has no accounts at all. Afterwards the
+   * backend answers 409 and the page shows the "already set up" path. Returns
+   * `{user_id, institution_id, role}` — deliberately no token, so the operator
+   * signs in with the credentials they just chose and proves they work.
+   *
+   * `auth: false` because there is no session yet; sending a stale token would
+   * only invite the API client to treat a rejection as a session expiry.
+   */
+  register: (account) =>
+    request('/auth/register', { method: 'POST', body: account, auth: false }),
 
   /** Returns the current session, useful for confirming a token is still live. */
   me: () => request('/auth/me'),

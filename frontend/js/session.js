@@ -142,11 +142,13 @@ export function canManage() {
  * @param {string} [reason]
  */
 export function redirectToLogin(reason) {
-  const target = new URL('index.html', window.location.href);
+  // A bare sibling filename, because the sign-in page sits in pages/ beside
+  // every guarded page and resolves this relative to itself.
+  const target = new URL('login.html', window.location.href);
   if (reason) target.searchParams.set('reason', reason);
   // Preserve the originally requested page so login can return there.
   const current = window.location.pathname.split('/').pop();
-  if (current && current !== 'index.html') {
+  if (current && current !== 'login.html') {
     target.searchParams.set('next', current + window.location.search);
   }
   window.location.replace(target.toString());
@@ -158,9 +160,15 @@ export function redirectToLogin(reason) {
  * @returns {boolean} true when the page may render.
  */
 export function requireSession() {
-  if (!getToken() || isExpired()) {
+  // Distinguished before anything is cleared: a token that has expired is a
+  // session that ended, while no token at all is a first visit. Only the first
+  // is worth explaining — the site's root leads to the dashboard, so a stranger
+  // opening the app arrives here having done nothing, and "Your session has
+  // ended" would be a puzzling thing to tell them.
+  const hadToken = Boolean(getToken());
+  if (!hadToken || isExpired()) {
     clearSession();
-    redirectToLogin('expired');
+    redirectToLogin(hadToken ? 'expired' : undefined);
     return false;
   }
   return true;
@@ -181,6 +189,6 @@ export async function signOut(apiRequest) {
     // Ignored on purpose; see above.
   } finally {
     clearSession();
-    window.location.replace('index.html');
+    window.location.replace('login.html');
   }
 }

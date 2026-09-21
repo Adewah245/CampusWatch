@@ -1,10 +1,16 @@
 // Command createuser creates a CampusWatch operator account.
 //
-// CampusWatch has no public registration — access is restricted to authorised
-// operators, and every dashboard route sits behind RequireRole("admin",
-// "manager") in internal/server. That leaves a bootstrapping problem: the
-// dashboard is unusable until an account exists, but nothing in the running
-// system can create one. This command is the way in.
+// Access is restricted to authorised operators, and every dashboard route sits
+// behind RequireRole("admin", "manager") in internal/server. The first account
+// is created from the browser: the frontend root is a first-run registration
+// page, and POST /api/v1/auth/register accepts exactly one account, for the
+// administrator of the institution it creates.
+//
+// This command is how every account after that gets made, and how a deployment
+// is scripted end to end. It is also the way to recover a deployment whose
+// registration page has already been used and whose credentials are lost: it
+// attaches another administrator to the existing institution without touching
+// the accounts already there.
 //
 // Run it from the repository root:
 //
@@ -158,7 +164,16 @@ func run(email, passwordFlag, firstName, lastName, institutionName, role string)
 	fmt.Printf("user        %s (%s) - created\n", created.Email, created.Role)
 	fmt.Printf("user id     %s\n", created.ID)
 	fmt.Println()
-	fmt.Println("Sign in at http://localhost:8000/ with the backend and dashboard running.")
+	// The backend serves the dashboard itself, so both share one port. PORT is
+	// not required for this command (see config.LoadDatabaseURL), so fall back to
+	// the documented default rather than failing: config.loadDotEnv has already
+	// read .env by this point, so a configured PORT is picked up here.
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	fmt.Printf("Sign in at http://localhost:%s/ once the backend is running.\n", port)
 
 	if passwordFromFlag {
 		fmt.Println()

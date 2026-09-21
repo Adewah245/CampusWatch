@@ -14,6 +14,7 @@ import (
 type AgentRepository interface {
 	Create(context.Context, model.Agent, string) (*model.Agent, error)
 	List(context.Context) ([]model.Agent, error)
+	ListBySystem(context.Context, string) ([]model.Agent, error)
 	Approve(context.Context, string, string) (*model.Agent, error)
 }
 
@@ -50,6 +51,14 @@ func (s *AgentService) Register(ctx context.Context, input model.AgentRegistrati
 }
 
 func (s *AgentService) List(ctx context.Context) ([]model.Agent, error) { return s.repo.List(ctx) }
+
+// ListBySystem returns the agents registered against one system.
+func (s *AgentService) ListBySystem(ctx context.Context, systemID string) ([]model.Agent, error) {
+	if strings.TrimSpace(systemID) == "" {
+		return nil, errors.New("system id is required")
+	}
+	return s.repo.ListBySystem(ctx, systemID)
+}
 
 func (s *AgentService) Approve(ctx context.Context, id string) (*model.AgentCredentialResponse, error) {
 	if strings.TrimSpace(id) == "" {

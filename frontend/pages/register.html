@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!--
+  CampusWatch first-run registration.
+
+  This page creates the deployment's first account, which is the administrator
+  for its institution. The backend allows it only while no account exists at
+  all, so it is a bootstrap step rather than an open sign-up form: once one
+  account exists the backend refuses the request and this page says so.
+
+  It is reached from the sign-in page, which offers it as "set up this
+  deployment". That is the only path a first-run operator needs: the dashboard
+  turns an unauthenticated visitor away to sign-in, and sign-in points here
+  while there is still nothing to sign in with.
+
+  Sign-in is a sibling page. This page deliberately does not link to it: it
+  exists to set a deployment up, and it hands off to sign-in on success so the
+  operator proves the credentials they just chose.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!--
+      `viewport-fit=cover` lets the page paint into the display cutout, which is
+      what makes the safe-area insets in css/main.css resolve to a real value on
+      notched phones. Without it they are always zero and content slides under
+      the notch in landscape.
+
+      theme-color tints the browser's own chrome to match the sticky header.
+    -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1c1f25" media="(prefers-color-scheme: dark)" />
+    <!--
+      The dashboard displays the operational state of monitored machines, so it
+      must never be indexed or cached by an intermediary. SecurityHeaders in the
+      backend sets the authoritative equivalents on every response it serves,
+      including this page.
+
+      A registration page is the last thing that should be indexed: an indexed
+      one invites a stranger to claim the administrator account on a deployment
+      that has not been set up yet.
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <title>Create administrator · CampusWatch</title>
+    <!--
+      The brand mark is listed first so browsers use it; the bundled vector mark
+      follows as the fallback. Browsers pick the first icon they can load. These
+      filenames cannot be chosen by script — a favicon is read from markup — so
+      keep them in step with js/config.js if the logo is ever renamed.
+    -->
+    <link rel="icon" href="../image/adewahlogo.png" type="image/png" />
+    <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <!--
+      Optional deployment override, read by js/config.js before anything else
+      runs. Uncomment and set an absolute URL when the dashboard is served from
+      a different origin than the API and that origin is configured to send
+      CORS headers.
+
+      <script>window.CAMPUSWATCH_API_BASE = 'https://campuswatch.example.edu';</script>
+    -->
+  </head>
+  <body>
+    <main class="login">
+      <div class="login__panel">
+        <div class="login__brand">
+          <!--
+            Replaced by js/pages/register.js with the brand mark from config.js.
+            The vector mark here is the fallback shown if that script has not
+            run yet.
+          -->
+          <img src="../assets/logo.svg" alt="" width="40" height="40" data-brand="login" />
+          <h1 class="login__title">CampusWatch</h1>
+        </div>
+        <p class="login__subtitle">Create the administrator account for this deployment.</p>
+
+        <!-- Populated by js/pages/register.js when the form is rejected. -->
+        <div id="register-error" class="login__error" role="alert" hidden></div>
+        <!--
+          Revealed when the backend reports that an account already exists. The
+          message is static markup rather than a string built in script, so this
+          state reads correctly even if the script never runs.
+        -->
+        <div id="register-closed" class="login__note" role="status" tabindex="-1" hidden>
+          This deployment already has an account, so registration is closed.
+        </div>
+
+        <form id="register-form" novalidate>
+          <div class="field">
+            <label class="field__label" for="institution">Institution</label>
+            <input
+              class="input"
+              id="institution"
+              name="institution"
+              type="text"
+              autocomplete="organization"
+              required
+              autofocus
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="first-name">First name</label>
+            <input
+              class="input"
+              id="first-name"
+              name="first_name"
+              type="text"
+              autocomplete="given-name"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="last-name">Last name</label>
+            <input
+              class="input"
+              id="last-name"
+              name="last_name"
+              type="text"
+              autocomplete="family-name"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="email">Email</label>
+            <input
+              class="input"
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="username"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="password">Password</label>
+            <!--
+              The `.field__control` wrapper is what attachPasswordToggle in
+              js/ui.js anchors the show/hide button to. It is inert without
+              script, so the field still works if that never runs.
+            -->
+            <div class="field__control">
+              <input
+                class="input"
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="confirm-password">Confirm password</label>
+            <div class="field__control">
+              <input
+                class="input"
+                id="confirm-password"
+                name="confirm_password"
+                type="password"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+          </div>
+
+          <button class="btn login__submit" id="register-submit" type="submit">
+            Create administrator account
+          </button>
+        </form>
+
+        <p class="login__note">
+          This form creates the first account and closes itself. It is not a sign-up page:
+          once an account exists, further accounts are added from inside the dashboard.
+        </p>
+      </div>
+    </main>
+
+    <script type="module" src="../js/pages/register.js"></script>
+  </body>
+</html>
