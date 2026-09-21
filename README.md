@@ -15,6 +15,49 @@ CampusWatch is built to support **multiple institutions from one platform**, whi
 
 ---
 
+# 0. Quick Start
+
+**Prerequisites:** Go 1.26+, Python 3.9+ (for the development dashboard server).
+
+Every command below runs from the **repository root**.
+
+```bash
+# 1. Configure the database. Copy the example and fill in your connection string.
+cp backend/.env.example backend/.env
+#    then edit backend/.env
+```
+
+```bash
+# 2. Create the first operator account. This also creates the institution, and
+#    applies the database migrations, so it is safe to run against a fresh
+#    database.
+CAMPUSWATCH_PASSWORD='choose-a-strong-password' \
+go run ./backend/cmd/createuser \
+    --email admin@adewah.edu \
+    --institution 'Adewah University'
+```
+
+```bash
+# 3. Start the API and the dashboard, in two terminals.
+go run ./backend/cmd/server      # terminal 1 - API on :8080
+python3 frontend/serve.py        # terminal 2 - dashboard on :8000
+```
+
+Then open <http://localhost:8000/> and sign in with the account from step 2.
+
+`serve.py` serves the dashboard and forwards `/api/*` to the backend, so the browser sees a
+single origin and CORS never applies. It is a development convenience — see
+[frontend/README.md](frontend/README.md) for the production arrangement.
+
+> **Sign-in returns 401?** That means no account exists yet, not that the password is wrong.
+> Run step 2 and try again. The dashboard needs an account with the `admin` or `manager`
+> role; every route is restricted to those two.
+
+> **Backend exits with "migrations directory not found"?** Run it from the repository root,
+> as shown, or set `MIGRATIONS_DIR` explicitly.
+
+---
+
 # 1. What is CampusWatch?
 
 CampusWatch connects three major parts:

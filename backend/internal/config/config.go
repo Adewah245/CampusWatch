@@ -27,6 +27,21 @@ func Load() (Config, error) {
 	return cfg, nil
 }
 
+// LoadDatabaseURL reads only the database URL, for commands that talk to the
+// database without serving HTTP.
+//
+// The server needs a port and a database; an administrative command such as
+// cmd/createuser needs only the database. Requiring PORT from those commands
+// would force an unrelated setting to be present for a one-off task.
+func LoadDatabaseURL() (string, error) {
+	loadDotEnv()
+	databaseURL := os.Getenv("DATABASE_URL")
+	if databaseURL == "" {
+		return "", errors.New("DATABASE_URL IS REQUIRED")
+	}
+	return databaseURL, nil
+}
+
 func loadDotEnv() {
 	paths := []string{filepath.Join("backend", ".env"), ".env"}
 	for _, path := range paths {

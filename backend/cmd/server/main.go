@@ -28,9 +28,9 @@ func main() {
 	defer db.Close()
 
 	log.Println("database connection established")
-	migrationDir := os.Getenv("MIGRATIONS_DIR")
-	if migrationDir == "" {
-		migrationDir = "backend/migrations"
+	migrationDir, err := database.ResolveMigrationsDir()
+	if err != nil {
+		log.Fatal(err)
 	}
 	if err := database.ApplyMigrations(ctx, db, migrationDir); err != nil {
 		log.Fatal(err)

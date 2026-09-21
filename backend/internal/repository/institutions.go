@@ -106,8 +106,38 @@ func (r *InstitutionRepository) GetByID(ctx context.Context, id string) (*model.
 	return &institution, nil
 }
 
-// Update changes the allowed fields for an institution and returns the updated record.
-func (r *InstitutionRepository) Update(ctx context.Context, id string, input model.UpdateInstitutionRequest) (*model.Institution, error) {
+// FindBySlug loads one institution by its slug.
+//
+// Slug is UNIQUE, so this resolves to at most one row. Account creation uses it
+// to attach a new user to an institution that already exists rather than
+// attempting a duplicate insert and tripping the constraint.
+func (r *InstitutionRepository) FindBySlug(ctx context.Context, slug string) (*model.Institution, error) {
+	query := `
+		SELECT id, name, slug, status, created_at, updated_at
+		FROM institutions
+		WHERE slug = $1
+	`
+
+	row := r.db.QueryRowContext(ctx, query, slug)
+	var institution model.Institution
+	if err := row.Scan(
+		&institution.ID,
+		&institution.Name,
+		&institution.Slug,
+		&institution.Status,
+		&institution.CreatedAt,
+		&institution.UpdatedAt,
+	); err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("select institution by slug: %w", err)
+	}
+
+	return &institution, nil
+}
+
+// Update changes the allowed fields for an institution and returns the updated record.func (r *InstitutionRepository) Update(ctx context.Context, id string, input model.UpdateInstitutionRequest) (*model.Institution, error) {
 	query := `
 		UPDATE institutions
 		SET name = COALESCE($1, name),

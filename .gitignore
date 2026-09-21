@@ -1,0 +1,13 @@
+# Environment files hold real credentials — the database connection string and
+# API keys — and must never be committed. `.env.example` is the tracked template
+# with placeholder values; copy it and fill in your own.
+#
+# The pattern has no slash, so it matches at any depth: `.env` here covers both
+# the root file and backend/.env.
+.env
+.env.*
+!.env.example
+
+# Python bytecode from the development dashboard server.
+__pycache__/
+*.py[cod]

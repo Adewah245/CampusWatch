@@ -15,6 +15,7 @@ type InstitutionRepository interface {
 	Create(ctx context.Context, institution model.Institution) (*model.Institution, error)
 	List(ctx context.Context) ([]model.Institution, error)
 	GetByID(ctx context.Context, id string) (*model.Institution, error)
+	FindBySlug(ctx context.Context, slug string) (*model.Institution, error)
 	Update(ctx context.Context, id string, input model.UpdateInstitutionRequest) (*model.Institution, error)
 	Delete(ctx context.Context, id string) (bool, error)
 }
@@ -72,6 +73,19 @@ func (s *InstitutionService) GetByID(ctx context.Context, id string) (*model.Ins
 		return nil, errors.New("institution id is required")
 	}
 	return s.repo.GetByID(ctx, id)
+}
+
+// GetBySlug loads one institution by slug, or by name when no slug is given.
+//
+// The input is slugified with the same rule Create uses, so a caller can pass
+// either "Adewah University" or "adewah-university" and reach the same row.
+// Returns (nil, nil) when nothing matches, leaving "create it" to the caller.
+func (s *InstitutionService) GetBySlug(ctx context.Context, slugOrName string) (*model.Institution, error) {
+	normalized := slugify(slugOrName)
+	if normalized == "" {
+		return nil, errors.New("institution slug is required")
+	}
+	return s.repo.FindBySlug(ctx, normalized)
 }
 
 // Update applies partial field updates to an institution.

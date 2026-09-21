@@ -18,15 +18,27 @@ and `fetch` are both blocked on the `file://` scheme.
 
 ### Locally, in one command
 
+Run both from the **repository root**.
+
 ```bash
 # Terminal 1 — the backend.
-cd backend && go run ./cmd/server
+go run ./backend/cmd/server
 
 # Terminal 2 — the dashboard, with /api forwarded to the backend.
 python3 frontend/serve.py
 ```
 
 Then open <http://localhost:8000/>.
+
+Signing in needs an account to exist, and CampusWatch has no public registration — see
+the Quick Start in the [top-level README](../README.md#0-quick-start). A `401` from
+`/api/v1/auth/login` means no account exists yet, not that the password was mistyped.
+Create one with:
+
+```bash
+CAMPUSWATCH_PASSWORD='choose-a-strong-password' \
+go run ./backend/cmd/createuser --email you@example.edu --institution 'Your Institution'
+```
 
 `serve.py` serves this directory and proxies `/api/*` to `127.0.0.1:8080`, so
 the browser sees a single origin and CORS never applies. It is a development
