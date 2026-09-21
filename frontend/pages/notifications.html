@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Notifications</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                Campus<span>Watch</span>
+            </div>
+
+            <p class="sidebar-description">
+                Campus System Monitoring
+            </p>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="institution.html">
+                    Institution
+                </a>
+
+                <a href="campus.html">
+                    Campus
+                </a>
+
+                <a href="cluster.html">
+                    Clusters
+                </a>
+
+                <a href="systems.html">
+                    Systems
+                </a>
+
+                <a href="sessions.html">
+                    Sessions
+                </a>
+
+                <a href="health.html">
+                    System Health
+                </a>
+
+                <a href="issues.html">
+                    Issues
+                </a>
+
+                <a href="reports.html">
+                    Reports
+                </a>
+
+                <a href="notifications.html" class="active">
+                    Notifications
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="../index.html">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
+
+        <main class="dashboard-main">
+
+
+            <header class="dashboard-topbar">
+
+                <div class="breadcrumb">
+                    CampusWatch / Notifications
+                </div>
+
+
+                <div class="user-profile">
+
+                    <div class="profile-circle">
+                        U
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Campus User
+                        </strong>
+
+                        <small>
+                            Student
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+
+            <div class="dashboard-content">
+
+
+                <div class="page-heading">
+
+                    <h1>
+                        Notifications
+                    </h1>
+
+                    <p>
+                        Monitor important system and campus events.
+                    </p>
+
+                </div>
+
+
+
+                <!-- Notification summary -->
+
+                <div class="dashboard-stats">
+
+
+                    <div class="stat-card">
+
+                        <p>
+                            Total Notifications
+                        </p>
+
+                        <strong>
+                            12
+                        </strong>
+
+                        <span>
+                            Current notifications
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <p>
+                            Critical
+                        </p>
+
+                        <strong class="stat-offline">
+                            2
+                        </strong>
+
+                        <span>
+                            Requires attention
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <p>
+                            Warnings
+                        </p>
+
+                        <strong class="stat-idle">
+                            4
+                        </strong>
+
+                        <span>
+                            System warnings
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <p>
+                            Information
+                        </p>
+
+                        <strong class="stat-online">
+                            6
+                        </strong>
+
+                        <span>
+                            General updates
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Critical notifications -->
+
+                <div class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Critical Notifications
+                            </h2>
+
+                            <span>
+                                Notifications requiring immediate attention.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-container-inner">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        System
+                                    </th>
+
+                                    <th>
+                                        Notification
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Time
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                <tr>
+
+                                    <td>
+                                        SYS-000031
+                                    </td>
+
+                                    <td>
+                                        CPU usage is critically high
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status offline">
+                                            Critical
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        5 minutes ago
+                                    </td>
+
+                                    <td>
+                                        <a
+                                            href="system-details.html"
+                                            class="view-button"
+                                        >
+                                            View
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        SYS-000047
+                                    </td>
+
+                                    <td>
+                                        Disk usage requires attention
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status offline">
+                                            Critical
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        12 minutes ago
+                                    </td>
+
+                                    <td>
+                                        <a
+                                            href="system-details.html"
+                                            class="view-button"
+                                        >
+                                            View
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Other notifications -->
+
+                <div class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Recent Notifications
+                            </h2>
+
+                            <span>
+                                Latest monitoring events.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-container-inner">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Type
+                                    </th>
+
+                                    <th>
+                                        System
+                                    </th>
+
+                                    <th>
+                                        Message
+                                    </th>
+
+                                    <th>
+                                        Time
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+
+                                <tr>
+
+                                    <td>
+                                        Warning
+                                    </td>
+
+                                    <td>
+                                        SYS-000018
+                                    </td>
+
+                                    <td>
+                                        CPU usage reached 87%.
+                                    </td>
+
+                                    <td>
+                                        15 minutes ago
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        System
+                                    </td>
+
+                                    <td>
+                                        SYS-000005
+                                    </td>
+
+                                    <td>
+                                        System entered maintenance mode.
+                                    </td>
+
+                                    <td>
+                                        1 hour ago
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        Offline
+                                    </td>
+
+                                    <td>
+                                        SYS-000004
+                                    </td>
+
+                                    <td>
+                                        No heartbeat received.
+                                    </td>
+
+                                    <td>
+                                        12 minutes ago
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        Information
+                                    </td>
+
+                                    <td>
+                                        SYS-000001
+                                    </td>
+
+                                    <td>
+                                        System is online and monitoring normally.
+                                    </td>
+
+                                    <td>
+                                        2 minutes ago
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script src="../js/app.js"></script>
+
+</body>
+
+</html>
