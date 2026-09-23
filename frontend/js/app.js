@@ -1,97 +1,234 @@
+/* =========================================
+   ADMIN LOGIN
+   ========================================= */
+
 const adminLoginForm = document.getElementById("adminLoginForm");
-const userLoginForm = document.getElementById("userLoginForm");
-
-
-// Admin login
 
 if (adminLoginForm) {
-
-    adminLoginForm.addEventListener("submit", function(event) {
-
+    adminLoginForm.addEventListener("submit", function (event) {
         event.preventDefault();
 
-        const email = document.getElementById("adminEmail").value;
-        const password = document.getElementById("adminPassword").value;
+        const emailInput = document.getElementById("adminEmail");
+        const passwordInput = document.getElementById("adminPassword");
+
+        const email = emailInput ? emailInput.value.trim() : "";
+        const password = passwordInput ? passwordInput.value : "";
 
         if (email === "" || password === "") {
-
             alert("Please enter your email and password.");
-
             return;
         }
 
         alert("Admin login successful!");
 
-        window.location.href = "admin-dashboard.html"
+        window.location.href = "admin-dashboard.html";
     });
-
 }
 
 
-// User login
+/* =========================================
+   USER LOGIN
+   ========================================= */
+
+const userLoginForm = document.getElementById("userLoginForm");
 
 if (userLoginForm) {
-    userLoginForm.addEventListener("submit", function(event) {
+
+    userLoginForm.addEventListener("submit", function (event) {
 
         event.preventDefault();
 
-        const email = document.getElementById("userEmail").value;
-        const password = document.getElementById("userPassword").value;
+
+        const emailInput = document.getElementById("userEmail");
+        const passwordInput = document.getElementById("userPassword");
+
+
+        const email = emailInput.value.trim().toLowerCase();
+        const password = passwordInput.value;
+
+
+        /* Check empty fields */
 
         if (email === "" || password === "") {
+
             alert("Please enter your email and password.");
+
             return;
         }
 
-        alert("Login successful! Welcome to CampusWatch.");
+
+        /* Check password length */
+
+        if (password.length < 8) {
+
+            alert("Password must be at least 8 characters long.");
+
+            return;
+        }
+
+
+        /* Get registered account */
+
+        const savedAccount =
+            localStorage.getItem("campusWatchAccount");
+
+
+        if (!savedAccount) {
+
+            alert(
+                "No CampusWatch account was found. " +
+                "Please create an account first."
+            );
+
+            return;
+        }
+
+
+        const account = JSON.parse(savedAccount);
+
+
+        /* Check email */
+
+        if (email !== account.email) {
+
+            alert(
+                "No account was found with this email address."
+            );
+
+            return;
+        }
+
+
+        /* Check password */
+
+        if (password !== account.password) {
+
+            alert("Incorrect password. Please try again.");
+
+            return;
+        }
+
+
+        /*
+         * Save the logged-in user's name.
+         * The dashboard can use this later.
+         */
+
+        localStorage.setItem(
+            "campusWatchCurrentUser",
+            account.fullName
+        );
+
+
+        /* Welcome message */
+
+        alert(
+            "Welcome back to CampusWatch, " +
+            account.fullName +
+            "!"
+        );
+
+
+        /* Open dashboard */
 
         window.location.href = "dashboard.html";
+
     });
+
 }
 
-// User registration
+/* =========================================
+   USER REGISTRATION
+   ========================================= */
 
 const registerForm = document.getElementById("registerForm");
 
 if (registerForm) {
 
-    registerForm.addEventListener("submit", function(event) {
+    registerForm.addEventListener("submit", function (event) {
 
         event.preventDefault();
 
-        const fullName = document.getElementById("fullName").value;
-        const email = document.getElementById("email").value;
+        const fullName = document.getElementById("fullName").value.trim();
+        const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirmPassword").value;
         const terms = document.getElementById("terms").checked;
 
-        if (fullName === "" || email === "" || password === "" || confirmPassword === "") {
 
+        /* Check required fields */
+
+        if (
+            fullName === "" ||
+            email === "" ||
+            password === "" ||
+            confirmPassword === ""
+        ) {
             alert("Please fill in all the required fields.");
-
             return;
         }
+
+
+        /* Check password length */
+
+        if (password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
+
+
+        /* Check password confirmation */
 
         if (password !== confirmPassword) {
-
             alert("Passwords do not match.");
-
             return;
         }
+
+
+        /* Check terms */
 
         if (!terms) {
-
-            alert("Please agree to the terms and conditions.");
-
+            alert("Please agree to the CampusWatch terms and conditions.");
             return;
         }
 
-        alert("Registration form submitted successfully!");
+
+        /*
+         * Save the registered account for this
+         * frontend demonstration.
+         */
+
+        const account = {
+            fullName: fullName,
+            email: email.toLowerCase(),
+            password: password,
+        };
+
+        localStorage.setItem(
+            "campusWatchAccount",
+            JSON.stringify(account)
+        );
+
+
+        /* Welcome message */
+
+        alert(
+            "Welcome to CampusWatch, " +
+            fullName +
+            "! Your account has been created successfully."
+        );
+
+
+        /* Take the user to login */
+
+        window.location.href = "login.html";
 
     });
 
 }
-// Systems page
+/* ===================================
+   SYSTEMS PAGES
+   =================================== */
 
 const systemsTableBody = document.getElementById("systemsTableBody");
 const clusterFilter = document.getElementById("clusterFilter");
@@ -230,3 +367,4 @@ if (systemsTableBody) {
     systemSearch.addEventListener("input", filterSystems);
 
 }
+
