@@ -20,8 +20,9 @@ if (adminLoginForm) {
             return;
         }
 
-        alert("Admin login button clicked successfully!");
+        alert("Admin login successful!");
 
+        window.location.href = "admin-dashboard.html"
     });
 
 }
@@ -30,7 +31,6 @@ if (adminLoginForm) {
 // User login
 
 if (userLoginForm) {
-
     userLoginForm.addEventListener("submit", function(event) {
 
         event.preventDefault();
@@ -39,16 +39,14 @@ if (userLoginForm) {
         const password = document.getElementById("userPassword").value;
 
         if (email === "" || password === "") {
-
             alert("Please enter your email and password.");
-
             return;
         }
 
-        alert("User login button clicked successfully!");
+        alert("Login successful! Welcome to CampusWatch.");
 
+        window.location.href = "dashboard.html";
     });
-
 }
 
 // User registration

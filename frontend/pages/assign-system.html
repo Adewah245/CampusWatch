@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Assign System</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+
+                <div class="brand-logo">
+                    CW
+                </div>
+
+                <h2>
+                    CampusWatch
+                </h2>
+
+            </div>
+
+            <p class="sidebar-description">
+                Administration Portal
+            </p>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="admin-dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="register-student.html">
+                    Register Student
+                </a>
+
+                <a href="register-system.html">
+                    Register System
+                </a>
+
+                <a href="pending-systems.html">
+                    Pending Systems
+                </a>
+
+                <a href="assign-system.html" class="active">
+                    Assign System
+                </a>
+
+                <a href="users.html">
+                    Users / Students
+                </a>
+
+                <a href="audit-logs.html">
+                    Audit Logs
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="dashboard.html">
+                    User Dashboard
+                </a>
+
+                <a href="../index.html">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-topbar">
+
+                <span class="breadcrumb">
+                    Admin / Assign System
+                </span>
+
+                <div class="user-profile">
+
+                    <div class="profile-circle">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <small>
+                            Admin
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div class="dashboard-content">
+
+                <div class="page-heading">
+
+                    <h1>
+                        Assign System
+                    </h1>
+
+                    <p>
+                        Assign a system to a student and campus location.
+                    </p>
+
+                </div>
+
+
+                <section class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Assignment Details
+                            </h2>
+
+                            <p>
+                                Select the system, student and location.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <form id="assignSystemForm">
+
+                        <div class="detail-grid">
+
+                            <div class="form-group">
+
+                                <label for="assignStudent">
+                                    Student
+                                </label>
+
+                                <select id="assignStudent">
+
+                                    <option>
+                                        Select Student
+                                    </option>
+
+                                    <option>
+                                        John Doe - STU-001
+                                    </option>
+
+                                    <option>
+                                        Jane Smith - STU-002
+                                    </option>
+
+                                    <option>
+                                        David James - STU-003
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="assignSystem">
+                                    System
+                                </label>
+
+                                <select id="assignSystem">
+
+                                    <option>
+                                        Select System
+                                    </option>
+
+                                    <option>
+                                        SYS-000001 - LAB-A-PC-001
+                                    </option>
+
+                                    <option>
+                                        SYS-000002 - LAB-A-PC-002
+                                    </option>
+
+                                    <option>
+                                        SYS-000097 - LAB-A-PC-097
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="assignInstitution">
+                                    Institution
+                                </label>
+
+                                <select id="assignInstitution">
+
+                                    <option>
+                                        CampusWatch Institution
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="assignCampus">
+                                    Campus
+                                </label>
+
+                                <select id="assignCampus">
+
+                                    <option>
+                                        Main Campus
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="assignCluster">
+                                    Cluster
+                                </label>
+
+                                <select id="assignCluster">
+
+                                    <option>
+                                        Cluster 1
+                                    </option>
+
+                                    <option>
+                                        Cluster 2
+                                    </option>
+
+                                    <option>
+                                        Cluster 3
+                                    </option>
+
+                                    <option>
+                                        Cluster 4
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="assignLocation">
+                                    Location / Table
+                                </label>
+
+                                <select id="assignLocation">
+
+                                    <option>
+                                        Table 1
+                                    </option>
+
+                                    <option>
+                                        Table 2
+                                    </option>
+
+                                    <option>
+                                        Table 3
+                                    </option>
+
+                                    <option>
+                                        Table 4
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Assign System
+                        </button>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const assignSystemForm =
+            document.getElementById("assignSystemForm");
+
+        assignSystemForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+                alert(
+                    "System assignment submitted. Backend connection will be added later."
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

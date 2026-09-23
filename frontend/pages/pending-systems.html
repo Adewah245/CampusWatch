@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Pending Systems</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+
+                <div class="brand-logo">
+                    CW
+                </div>
+
+                <h2>
+                    CampusWatch
+                </h2>
+
+            </div>
+
+            <p class="sidebar-description">
+                Administration Portal
+            </p>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="admin-dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="register-student.html">
+                    Register Student
+                </a>
+
+                <a href="register-system.html">
+                    Register System
+                </a>
+
+                <a href="pending-systems.html" class="active">
+                    Pending Systems
+                </a>
+
+                <a href="assign-system.html">
+                    Assign System
+                </a>
+
+                <a href="users.html">
+                    Users / Students
+                </a>
+
+                <a href="audit-logs.html">
+                    Audit Logs
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="dashboard.html">
+                    User Dashboard
+                </a>
+
+                <a href="../index.html">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-topbar">
+
+                <span class="breadcrumb">
+                    Admin / Pending Systems
+                </span>
+
+                <div class="user-profile">
+
+                    <div class="profile-circle">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <small>
+                            Admin
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div class="dashboard-content">
+
+                <div class="page-heading">
+
+                    <h1>
+                        Pending Systems
+                    </h1>
+
+                    <p>
+                        Review systems waiting for administrator approval.
+                    </p>
+
+                </div>
+
+
+                <section class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Systems Awaiting Approval
+                            </h2>
+
+                            <p>
+                                Review and approve newly registered systems.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-container-inner">
+
+                        <table class="system-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        System ID
+                                    </th>
+
+                                    <th>
+                                        Hostname
+                                    </th>
+
+                                    <th>
+                                        Campus
+                                    </th>
+
+                                    <th>
+                                        Cluster
+                                    </th>
+
+                                    <th>
+                                        Location
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Action
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        SYS-000097
+                                    </td>
+
+                                    <td>
+                                        LAB-A-PC-097
+                                    </td>
+
+                                    <td>
+                                        Main Campus
+                                    </td>
+
+                                    <td>
+                                        Cluster 1
+                                    </td>
+
+                                    <td>
+                                        Table 25
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-status idle">
+                                            Pending
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <button
+                                            type="button"
+                                            class="view-button"
+                                            onclick="approveSystem('SYS-000097')"
+                                        >
+                                            Approve
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        SYS-000098
+                                    </td>
+
+                                    <td>
+                                        LAB-A-PC-098
+                                    </td>
+
+                                    <td>
+                                        Main Campus
+                                    </td>
+
+                                    <td>
+                                        Cluster 1
+                                    </td>
+
+                                    <td>
+                                        Table 25
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-status idle">
+                                            Pending
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <button
+                                            type="button"
+                                            class="view-button"
+                                            onclick="approveSystem('SYS-000098')"
+                                        >
+                                            Approve
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        SYS-000099
+                                    </td>
+
+                                    <td>
+                                        LAB-A-PC-099
+                                    </td>
+
+                                    <td>
+                                        Main Campus
+                                    </td>
+
+                                    <td>
+                                        Cluster 2
+                                    </td>
+
+                                    <td>
+                                        Data Pending
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-status idle">
+                                            Pending
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <button
+                                            type="button"
+                                            class="view-button"
+                                            onclick="approveSystem('SYS-000099')"
+                                        >
+                                            Approve
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+
+                <section class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Approval Process
+                            </h2>
+
+                            <p>
+                                A system moves through the monitoring workflow after approval.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-grid">
+
+                        <div class="detail-item">
+
+                            <span>
+                                Step 1
+                            </span>
+
+                            <strong>
+                                System Registered
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Step 2
+                            </span>
+
+                            <strong>
+                                Pending Approval
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Step 3
+                            </span>
+
+                            <strong>
+                                Administrator Approval
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Step 4
+                            </span>
+
+                            <strong>
+                                Assign Location
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        function approveSystem(systemId) {
+
+            alert(
+                systemId +
+                " selected for approval. Backend approval will be connected later."
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

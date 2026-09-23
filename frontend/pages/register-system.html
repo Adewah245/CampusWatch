@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Register System</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+
+                <div class="brand-logo">
+                    CW
+                </div>
+
+                <h2>
+                    CampusWatch
+                </h2>
+
+            </div>
+
+            <p class="sidebar-description">
+                Administration Portal
+            </p>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="admin-dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="register-student.html">
+                    Register Student
+                </a>
+
+                <a href="register-system.html" class="active">
+                    Register System
+                </a>
+
+                <a href="pending-systems.html">
+                    Pending Systems
+                </a>
+
+                <a href="assign-system.html">
+                    Assign System
+                </a>
+
+                <a href="users.html">
+                    Users / Students
+                </a>
+
+                <a href="audit-logs.html">
+                    Audit Logs
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="dashboard.html">
+                    User Dashboard
+                </a>
+
+                <a href="../index.html">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-topbar">
+
+                <span class="breadcrumb">
+                    Admin / Register System
+                </span>
+
+                <div class="user-profile">
+
+                    <div class="profile-circle">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <small>
+                            Admin
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div class="dashboard-content">
+
+                <div class="page-heading">
+
+                    <h1>
+                        Register System
+                    </h1>
+
+                    <p>
+                        Add a computer system to the CampusWatch monitoring structure.
+                    </p>
+
+                </div>
+
+
+                <section class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                System Information
+                            </h2>
+
+                            <p>
+                                Enter the basic details of the computer.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <form id="registerSystemForm">
+
+                        <div class="detail-grid">
+
+                            <div class="form-group">
+
+                                <label for="systemId">
+                                    System ID
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="systemId"
+                                    placeholder="Example: SYS-000097"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="hostname">
+                                    Hostname
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="hostname"
+                                    placeholder="Example: LAB-A-PC-097"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="operatingSystem">
+                                    Operating System
+                                </label>
+
+                                <select id="operatingSystem">
+
+                                    <option>
+                                        Linux
+                                    </option>
+
+                                    <option>
+                                        Windows
+                                    </option>
+
+                                    <option>
+                                        macOS
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="agentVersion">
+                                    Agent Version
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="agentVersion"
+                                    placeholder="Example: v1.0.0"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+
+                        <div class="table-header">
+
+                            <div>
+
+                                <h2>
+                                    System Location
+                                </h2>
+
+                                <p>
+                                    Place the system within the campus hierarchy.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-grid">
+
+                            <div class="form-group">
+
+                                <label for="systemInstitution">
+                                    Institution
+                                </label>
+
+                                <select id="systemInstitution">
+
+                                    <option>
+                                        CampusWatch Institution
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="systemCampus">
+                                    Campus
+                                </label>
+
+                                <select id="systemCampus">
+
+                                    <option>
+                                        Main Campus
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="systemCluster">
+                                    Cluster
+                                </label>
+
+                                <select id="systemCluster">
+
+                                    <option>
+                                        Cluster 1
+                                    </option>
+
+                                    <option>
+                                        Cluster 2
+                                    </option>
+
+                                    <option>
+                                        Cluster 3
+                                    </option>
+
+                                    <option>
+                                        Cluster 4
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="systemLocation">
+                                    Location / Table
+                                </label>
+
+                                <select id="systemLocation">
+
+                                    <option>
+                                        Table 1
+                                    </option>
+
+                                    <option>
+                                        Table 2
+                                    </option>
+
+                                    <option>
+                                        Table 3
+                                    </option>
+
+                                    <option>
+                                        Table 4
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Register System
+                        </button>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const registerSystemForm =
+            document.getElementById("registerSystemForm");
+
+        registerSystemForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+                alert(
+                    "System registration submitted. Backend connection will be added later."
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Users</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+
+                <div class="brand-logo">
+                    CW
+                </div>
+
+                <h2>
+                    CampusWatch
+                </h2>
+
+            </div>
+
+            <p class="sidebar-description">
+                Administration Portal
+            </p>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="admin-dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="register-student.html">
+                    Register Student
+                </a>
+
+                <a href="register-system.html">
+                    Register System
+                </a>
+
+                <a href="pending-systems.html">
+                    Pending Systems
+                </a>
+
+                <a href="assign-system.html">
+                    Assign System
+                </a>
+
+                <a href="users.html" class="active">
+                    Users / Students
+                </a>
+
+                <a href="audit-logs.html">
+                    Audit Logs
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="dashboard.html">
+                    User Dashboard
+                </a>
+
+                <a href="../index.html">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-topbar">
+
+                <span class="breadcrumb">
+                    Admin / Users
+                </span>
+
+                <div class="user-profile">
+
+                    <div class="profile-circle">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <small>
+                            Admin
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div class="dashboard-content">
+
+                <div class="page-heading">
+
+                    <h1>
+                        Users / Students
+                    </h1>
+
+                    <p>
+                        View and manage CampusWatch users.
+                    </p>
+
+                </div>
+
+
+                <section class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Registered Users
+                            </h2>
+
+                            <p>
+                                Current CampusWatch account information.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="register-student.html"
+                            class="view-button"
+                        >
+                            Register Student
+                        </a>
+
+                    </div>
+
+
+                    <div class="table-container-inner">
+
+                        <table class="system-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        User ID
+                                    </th>
+
+                                    <th>
+                                        Name
+                                    </th>
+
+                                    <th>
+                                        Email
+                                    </th>
+
+                                    <th>
+                                        Role
+                                    </th>
+
+                                    <th>
+                                        Location
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        STU-001
+                                    </td>
+
+                                    <td>
+                                        John Doe
+                                    </td>
+
+                                    <td>
+                                        john@example.com
+                                    </td>
+
+                                    <td>
+                                        Student
+                                    </td>
+
+                                    <td>
+                                        Cluster 1 / Table 1
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-status online">
+                                            Active
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        STU-002
+                                    </td>
+
+                                    <td>
+                                        Jane Smith
+                                    </td>
+
+                                    <td>
+                                        jane@example.com
+                                    </td>
+
+                                    <td>
+                                        Student
+                                    </td>
+
+                                    <td>
+                                        Cluster 1 / Table 1
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-status online">
+                                            Active
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        STU-003
+                                    </td>
+
+                                    <td>
+                                        David James
+                                    </td>
+
+                                    <td>
+                                        david@example.com
+                                    </td>
+
+                                    <td>
+                                        Operator
+                                    </td>
+
+                                    <td>
+                                        Main Campus
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-status online">
+                                            Active
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        STU-004
+                                    </td>
+
+                                    <td>
+                                        Michael
+                                    </td>
+
+                                    <td>
+                                        michael@example.com
+                                    </td>
+
+                                    <td>
+                                        Student
+                                    </td>
+
+                                    <td>
+                                        Cluster 1 / Table 2
+                                    </td>
+
+                                    <td>
+
+                                        <span class="table-status offline">
+                                            Inactive
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

@@ -3047,3 +3047,284 @@ table td {
     }
 
 }
+
+/* =========================================================
+   CAMPUSWATCH REGISTRATION PAGE
+   ========================================================= */
+
+.auth-page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 40px 20px;
+    background: #f1f5f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+/* Main registration container */
+
+.auth-container {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+
+/* CampusWatch heading */
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.auth-header h1 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 700;
+    color: #092b57;
+    letter-spacing: -0.5px;
+}
+
+.auth-header h1 span {
+    color: #2563eb;
+}
+
+.auth-header p {
+    margin: 8px 0 0;
+    color: #64748b;
+    font-size: 15px;
+}
+
+
+/* Registration card */
+
+.auth-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+
+/* Card heading */
+
+.auth-card h2 {
+    margin: 0 0 8px;
+    color: #0f172a;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.auth-description {
+    margin: 0 0 28px;
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* Form groups */
+
+.auth-card .form-group {
+    margin-bottom: 20px;
+}
+
+.auth-card .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #1e293b;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
+/* Inputs and select */
+
+.auth-card input,
+.auth-card select {
+    width: 100%;
+    min-height: 46px;
+    padding: 0 14px;
+    box-sizing: border-box;
+
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+
+    background: #ffffff;
+    color: #0f172a;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+/* Input focus */
+
+.auth-card input:focus,
+.auth-card select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+
+/* Placeholder */
+
+.auth-card input::placeholder {
+    color: #94a3b8;
+}
+
+
+/* Account type help text */
+
+.form-help {
+    display: block;
+    margin-top: 7px;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* Terms checkbox */
+
+.form-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 6px 0 22px;
+}
+
+.form-checkbox input {
+    width: 17px;
+    height: 17px;
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: #2563eb;
+}
+
+.form-checkbox label {
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+
+/* Create account button */
+
+.auth-button {
+    width: 100%;
+    min-height: 48px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.auth-button:hover {
+    background: #1d4ed8;
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.2);
+}
+
+.auth-button:active {
+    transform: translateY(1px);
+}
+
+
+/* Bottom section */
+
+.auth-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+
+    border-top: 1px solid #e2e8f0;
+
+    text-align: center;
+}
+
+.auth-footer p {
+    margin: 0;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.auth-footer a {
+    color: #2563eb;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* Back to home */
+
+.back-home {
+    display: block;
+    margin-top: 20px;
+
+    text-align: center;
+}
+
+.back-home a {
+    color: #64748b;
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.back-home a:hover {
+    color: #2563eb;
+}
+
+
+/* Registration page responsive design */
+
+@media (max-width: 600px) {
+
+    .auth-page {
+        padding: 25px 15px;
+        align-items: flex-start;
+    }
+
+    .auth-container {
+        margin-top: 20px;
+    }
+
+    .auth-card {
+        padding: 25px 20px;
+    }
+
+    .auth-header h1 {
+        font-size: 29px;
+    }
+
+    .auth-card h2 {
+        font-size: 23px;
+    }
+
+}

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Admin Dashboard</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                <div class="brand-logo">
+                    CW
+                </div>
+
+                <h2>
+                    CampusWatch
+                </h2>
+            </div>
+
+            <p class="sidebar-description">
+                Administration Portal
+            </p>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="admin-dashboard.html" class="active">
+                    Dashboard
+                </a>
+
+                <a href="register-student.html">
+                    Register Student
+                </a>
+
+                <a href="register-system.html">
+                    Register System
+                </a>
+
+                <a href="pending-systems.html">
+                    Pending Systems
+                </a>
+
+                <a href="assign-system.html">
+                    Assign System
+                </a>
+
+                <a href="users.html">
+                    Users / Students
+                </a>
+
+                <a href="audit-logs.html">
+                    Audit Logs
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="dashboard.html">
+                    User Dashboard
+                </a>
+
+                <a href="../index.html">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main content -->
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-topbar">
+
+                <div>
+                    <span class="breadcrumb">
+                        Admin / Dashboard
+                    </span>
+                </div>
+
+                <div class="user-profile">
+
+                    <div class="profile-circle">
+                        A
+                    </div>
+
+                    <div>
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <small>
+                            Admin
+                        </small>
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div class="dashboard-content">
+
+                <div class="page-heading">
+
+                    <h1>
+                        Admin Dashboard
+                    </h1>
+
+                    <p>
+                        Manage students, systems and CampusWatch access.
+                    </p>
+
+                </div>
+
+
+                <!-- Statistics -->
+
+                <div class="dashboard-stats">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            👥
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+                                Total Students
+                            </span>
+
+                            <strong>
+                                42
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-online">
+
+                        <div class="stat-icon">
+                            🖥️
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+                                Active Systems
+                            </span>
+
+                            <strong>
+                                78
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-idle">
+
+                        <div class="stat-icon">
+                            ⏳
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+                                Pending Systems
+                            </span>
+
+                            <strong>
+                                6
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-offline">
+
+                        <div class="stat-icon">
+                            ⚠
+                        </div>
+
+                        <div class="stat-info">
+
+                            <span>
+                                Open Issues
+                            </span>
+
+                            <strong>
+                                6
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Quick actions -->
+
+                <section class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Quick Actions
+                            </h2>
+
+                            <p>
+                                Common administrative tasks.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="cluster-grid">
+
+                        <a
+                            href="register-student.html"
+                            class="location-card"
+                        >
+
+                            <h3>
+                                Register Student
+                            </h3>
+
+                            <p>
+                                Create a student account and assign their campus details.
+                            </p>
+
+                        </a>
+
+
+                        <a
+                            href="register-system.html"
+                            class="location-card"
+                        >
+
+                            <h3>
+                                Register System
+                            </h3>
+
+                            <p>
+                                Add a new computer system to CampusWatch.
+                            </p>
+
+                        </a>
+
+
+                        <a
+                            href="pending-systems.html"
+                            class="location-card"
+                        >
+
+                            <h3>
+                                Pending Systems
+                            </h3>
+
+                            <p>
+                                Review systems waiting for administrator approval.
+                            </p>
+
+                        </a>
+
+
+                        <a
+                            href="assign-system.html"
+                            class="location-card"
+                        >
+
+                            <h3>
+                                Assign System
+                            </h3>
+
+                            <p>
+                                Assign a system to a student and location.
+                            </p>
+
+                        </a>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Pending systems -->
+
+                <section class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Pending System Approvals
+                            </h2>
+
+                            <p>
+                                Systems currently waiting for administrator review.
+                            </p>
+
+                        </div>
+
+                        <a
+                            href="pending-systems.html"
+                            class="view-button"
+                        >
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="table-container-inner">
+
+                        <table class="system-table">
+
+                            <thead>
+
+                                <tr>
+                                    <th>System ID</th>
+                                    <th>Hostname</th>
+                                    <th>Cluster</th>
+                                    <th>Location</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        SYS-000097
+                                    </td>
+
+                                    <td>
+                                        LAB-A-PC-097
+                                    </td>
+
+                                    <td>
+                                        Cluster 1
+                                    </td>
+
+                                    <td>
+                                        Table 25
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status idle">
+                                            Pending
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <a
+                                            href="pending-systems.html"
+                                            class="view-button"
+                                        >
+                                            Review
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+
+                                <tr>
+
+                                    <td>
+                                        SYS-000098
+                                    </td>
+
+                                    <td>
+                                        LAB-A-PC-098
+                                    </td>
+
+                                    <td>
+                                        Cluster 1
+                                    </td>
+
+                                    <td>
+                                        Table 25
+                                    </td>
+
+                                    <td>
+                                        <span class="table-status idle">
+                                            Pending
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <a
+                                            href="pending-systems.html"
+                                            class="view-button"
+                                        >
+                                            Review
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

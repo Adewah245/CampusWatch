@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusWatch - Register Student</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+
+                <div class="brand-logo">
+                    CW
+                </div>
+
+                <h2>
+                    CampusWatch
+                </h2>
+
+            </div>
+
+            <p class="sidebar-description">
+                Administration Portal
+            </p>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="admin-dashboard.html">
+                    Dashboard
+                </a>
+
+                <a href="register-student.html" class="active">
+                    Register Student
+                </a>
+
+                <a href="register-system.html">
+                    Register System
+                </a>
+
+                <a href="pending-systems.html">
+                    Pending Systems
+                </a>
+
+                <a href="assign-system.html">
+                    Assign System
+                </a>
+
+                <a href="users.html">
+                    Users / Students
+                </a>
+
+                <a href="audit-logs.html">
+                    Audit Logs
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-bottom">
+
+                <a href="dashboard.html">
+                    User Dashboard
+                </a>
+
+                <a href="../index.html">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main -->
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-topbar">
+
+                <span class="breadcrumb">
+                    Admin / Register Student
+                </span>
+
+                <div class="user-profile">
+
+                    <div class="profile-circle">
+                        A
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Administrator
+                        </strong>
+
+                        <small>
+                            Admin
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <div class="dashboard-content">
+
+                <div class="page-heading">
+
+                    <h1>
+                        Register Student
+                    </h1>
+
+                    <p>
+                        Create a student account and assign their campus information.
+                    </p>
+
+                </div>
+
+
+                <section class="section-card">
+
+                    <div class="table-header">
+
+                        <div>
+
+                            <h2>
+                                Student Information
+                            </h2>
+
+                            <p>
+                                Enter the student's basic account information.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <form id="registerStudentForm">
+
+                        <div class="detail-grid">
+
+                            <div class="form-group">
+
+                                <label for="studentName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="studentName"
+                                    placeholder="Enter student's full name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="studentId">
+                                    Student ID
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="studentId"
+                                    placeholder="Enter student ID"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="studentEmail">
+                                    Email Address
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="studentEmail"
+                                    placeholder="Enter student's email"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="studentPhone">
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="studentPhone"
+                                    placeholder="Enter phone number"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+
+                        <div class="table-header">
+
+                            <div>
+
+                                <h2>
+                                    Campus Assignment
+                                </h2>
+
+                                <p>
+                                    Select where the student belongs.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-grid">
+
+                            <div class="form-group">
+
+                                <label for="institution">
+                                    Institution
+                                </label>
+
+                                <select id="institution">
+
+                                    <option>
+                                        CampusWatch Institution
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="campus">
+                                    Campus
+                                </label>
+
+                                <select id="campus">
+
+                                    <option>
+                                        Main Campus
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="cluster">
+                                    Cluster
+                                </label>
+
+                                <select id="cluster">
+
+                                    <option>
+                                        Cluster 1
+                                    </option>
+
+                                    <option>
+                                        Cluster 2
+                                    </option>
+
+                                    <option>
+                                        Cluster 3
+                                    </option>
+
+                                    <option>
+                                        Cluster 4
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="location">
+                                    Location / Table
+                                </label>
+
+                                <select id="location">
+
+                                    <option>
+                                        Table 1
+                                    </option>
+
+                                    <option>
+                                        Table 2
+                                    </option>
+
+                                    <option>
+                                        Table 3
+                                    </option>
+
+                                    <option>
+                                        Table 4
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <br>
+
+
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            Register Student
+                        </button>
+
+                    </form>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+
+    <script>
+
+        const registerStudentForm =
+            document.getElementById("registerStudentForm");
+
+        registerStudentForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+                alert(
+                    "Student registration submitted. Backend connection will be added later."
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
