@@ -25,7 +25,6 @@ if (adminLoginForm) {
     });
 }
 
-
 /* =========================================
    USER LOGIN
    ========================================= */
@@ -67,13 +66,13 @@ if (userLoginForm) {
         }
 
 
-        /* Get registered account */
+        /* Get all registered accounts */
 
-        const savedAccount =
-            localStorage.getItem("campusWatchAccount");
+        const savedAccounts =
+            localStorage.getItem("campusWatchAccounts");
 
 
-        if (!savedAccount) {
+        if (!savedAccounts) {
 
             alert(
                 "No CampusWatch account was found. " +
@@ -84,12 +83,23 @@ if (userLoginForm) {
         }
 
 
-        const account = JSON.parse(savedAccount);
+        /* Convert saved accounts back into an array */
+
+        const accounts = JSON.parse(savedAccounts);
 
 
-        /* Check email */
+        /* Find the account with this email */
 
-        if (email !== account.email) {
+        const account = accounts.find(function (account) {
+
+            return account.email === email;
+
+        });
+
+
+        /* Check if account exists */
+
+        if (!account) {
 
             alert(
                 "No account was found with this email address."
@@ -111,7 +121,7 @@ if (userLoginForm) {
 
         /*
          * Save the logged-in user's name.
-         * The dashboard can use this later.
+         * The dashboard uses this later.
          */
 
         localStorage.setItem(
@@ -150,7 +160,7 @@ if (registerForm) {
         event.preventDefault();
 
         const fullName = document.getElementById("fullName").value.trim();
-        const email = document.getElementById("email").value.trim();
+        const email = document.getElementById("email").value.trim().toLowerCase();
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirmPassword").value;
         const terms = document.getElementById("terms").checked;
@@ -193,20 +203,44 @@ if (registerForm) {
         }
 
 
-        /*
-         * Save the registered account for this
-         * frontend demonstration.
-         */
+        /* Get existing accounts */
+
+        let accounts =
+            JSON.parse(localStorage.getItem("campusWatchAccounts")) || [];
+
+
+        /* Check if email already exists */
+
+        const existingAccount = accounts.find(function (account) {
+            return account.email === email;
+        });
+
+
+        if (existingAccount) {
+            alert("An account with this email already exists.");
+            return;
+        }
+
+
+        /* Create new account */
 
         const account = {
             fullName: fullName,
-            email: email.toLowerCase(),
-            password: password,
+            email: email,
+            password: password
         };
 
+
+        /* Add the new account to the accounts list */
+
+        accounts.push(account);
+
+
+        /* Save all accounts */
+
         localStorage.setItem(
-            "campusWatchAccount",
-            JSON.stringify(account)
+            "campusWatchAccounts",
+            JSON.stringify(accounts)
         );
 
 
@@ -226,6 +260,8 @@ if (registerForm) {
     });
 
 }
+
+
 /* ===================================
    SYSTEMS PAGES
    =================================== */
@@ -368,3 +404,31 @@ if (systemsTableBody) {
 
 }
 
+/* =========================================
+   DASHBOARD USER
+   ========================================= */
+
+const currentUserName = document.getElementById("currentUserName");
+const profileInitial = document.getElementById("profileInitial");
+
+const savedCurrentUser =
+    localStorage.getItem("campusWatchCurrentUser");
+
+
+if (savedCurrentUser) {
+
+    /* Display user's full name */
+
+    if (currentUserName) {
+        currentUserName.textContent = savedCurrentUser;
+    }
+
+
+    /* Display first letter of user's name */
+
+    if (profileInitial) {
+        profileInitial.textContent =
+            savedCurrentUser.charAt(0).toUpperCase();
+    }
+
+}
