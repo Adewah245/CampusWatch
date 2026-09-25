@@ -432,3 +432,26 @@ if (savedCurrentUser) {
     }
 
 }
+/* =========================================
+   USER LOGOUT
+   ========================================= */
+
+const logoutButton = document.getElementById("logoutButton");
+
+if (logoutButton) {
+
+    logoutButton.addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        /* Remove the currently logged-in user */
+
+        localStorage.removeItem("campusWatchCurrentUser");
+
+        /* Send the user back to the login page */
+
+        window.location.href = "login.html";
+
+    });
+
+}
