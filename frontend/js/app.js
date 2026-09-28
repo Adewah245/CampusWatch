@@ -455,3 +455,22 @@ if (logoutButton) {
     });
 
 }
+
+/* =========================================
+   PROTECT DASHBOARD
+   ========================================= */
+
+const currentPage = window.location.pathname;
+
+if (currentPage.includes("dashboard.html")) {
+
+    const loggedInUser =
+        localStorage.getItem("campusWatchCurrentUser");
+
+    if (!loggedInUser) {
+
+        alert("Please login to access the dashboard.");
+
+        window.location.href = "login.html";
+    }
+}
