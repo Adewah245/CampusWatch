@@ -1,0 +1,6 @@
+{
+  "name": "CampusWatch",
+  "description": "Multi-institution computer monitoring and management platform designed for schools, colleges, laboratories, and institutions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

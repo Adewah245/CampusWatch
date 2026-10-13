@@ -66,6 +66,12 @@
         </div>
         <p class="login__subtitle">Sign in to the monitoring dashboard.</p>
 
+        <div style="margin: 0.75rem 0 1.25rem; padding: 0.75rem 1rem; background: var(--bg-surface, #f8fafc); border: 1px solid var(--border-subtle, #e2e8f0); border-radius: 6px; font-size: 0.82rem; line-height: 1.5; color: var(--text-muted, #64748b);">
+          <strong style="color: var(--text-body, #1e293b);">Demo Admin Credentials:</strong><br />
+          Email: <code style="font-size: 0.82rem; color: #2563eb;">admin@campuswatch.edu</code><br />
+          Password: <code style="font-size: 0.82rem; color: #2563eb;">AdminPassword123!</code>
+        </div>
+
         <!-- Populated by js/pages/login.js when a sign-in attempt fails. -->
         <div id="login-error" class="login__error" role="alert" hidden></div>
         <!-- Populated by js/pages/login.js after a successful registration. -->
@@ -79,6 +85,7 @@
               id="email"
               name="email"
               type="email"
+              value="admin@campuswatch.edu"
               autocomplete="username"
               required
               autofocus
@@ -94,6 +101,7 @@
                 id="password"
                 name="password"
                 type="password"
+                value="AdminPassword123!"
                 autocomplete="current-password"
                 required
               />
