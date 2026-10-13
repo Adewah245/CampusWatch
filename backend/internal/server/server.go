@@ -31,10 +31,18 @@ func NewRouter(db *sql.DB) *http.ServeMux {
 		mux.HandleFunc("/api/v1/auth/register", handler.RegisterHandler(authService))
 		authMiddleware := middleware.NewMiddleware(sessionRepo)
 		auditRepo := repository.NewAuditRepository(db)
+
 		admin := func(next http.HandlerFunc) http.Handler {
-			protected := middleware.RequireRole("admin", "manager")(authMiddleware.RequireAuth(next))
+			// Step 1: Verify the bearer token and load the session.
+			// Step 2: Check whether the authenticated user has the required role.
+			protected := authMiddleware.RequireAuth(
+				middleware.RequireRole("admin", "manager")(next),
+			)
+
+			// Step 3: Record the authenticated administrative request.
 			return middleware.Audit(auditRepo, protected)
 		}
+
 		mux.Handle("/api/v1/auth/me", authMiddleware.RequireAuth(handler.AuthMeHandler))
 		mux.Handle("/api/v1/auth/logout", authMiddleware.RequireAuth(handler.AuthLogoutHandler(authService)))
 

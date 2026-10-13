@@ -21,7 +21,13 @@ func (r *agentRepoStub) Approve(_ context.Context, _ string, credentialHash stri
 	r.credentialHash = credentialHash
 	return r.agent, nil
 }
-
+// ListBySystem implements AgentRepository for tests.
+func (r *agentRepoStub) ListBySystem(
+    context.Context,
+    string,
+) ([]model.Agent, error) {
+    return nil, nil
+}
 func TestAgentServiceRegisterCreatesPendingCredential(t *testing.T) {
 	repo := &agentRepoStub{}
 	svc := NewAgentService(repo)

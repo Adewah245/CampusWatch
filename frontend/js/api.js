@@ -167,8 +167,7 @@ export async function request(path, options = {}) {
       0,
     );
   }
-
-  if (response.status === 401) {
+if (response.status === 401 && auth) {
     // The token is expired, revoked, or was never valid. Drop it and send the
     // operator back to sign-in rather than showing an error they cannot act on.
     const raw = await response.text().catch(() => '');
